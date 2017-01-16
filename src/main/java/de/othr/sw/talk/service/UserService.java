@@ -31,6 +31,11 @@ public class UserService {
         em.remove(user);
     }
     
+    public boolean authenticate(String username, String password){
+        
+        return false;
+    }
+    
     public List<User> getAllUser() {
         TypedQuery<User> query = em.createQuery("SELECT u FROM User AS u", User.class);
         return query.getResultList();

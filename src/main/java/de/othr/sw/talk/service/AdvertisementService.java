@@ -24,6 +24,6 @@ public class AdvertisementService {
     @Transactional
     public String createAdvertisement(String link, String text){
         //dummy
-        return "dummy";
+        return "dummy link to the advertisement";
     }
 }

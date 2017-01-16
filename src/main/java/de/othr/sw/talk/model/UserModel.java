@@ -28,6 +28,10 @@ public class UserModel implements Serializable{
         this.password = null;
     }
     
+    public boolean authenticate(){
+        return this.userService.authenticate(this.username, this.password);
+    }
+    
     public List<User> allUsers() {
         return this.userService.getAllUser();
     }
