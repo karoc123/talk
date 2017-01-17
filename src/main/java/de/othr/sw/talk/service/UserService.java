@@ -32,7 +32,10 @@ public class UserService {
     }
     
     public boolean authenticate(String username, String password){
-        
+        User u = em.find(User.class, username);
+        if(u != null && u.getPassword().equals(password)){
+            return true;
+        }
         return false;
     }
     
