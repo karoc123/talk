@@ -8,10 +8,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- *
- * @author karoc
- */
+
 @Named
 @SessionScoped
 public class UserModel implements Serializable{
@@ -59,7 +56,14 @@ public class UserModel implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    public User getLastGenerated() {
+        return lastGenerated;
+    }
+
+    public void setLastGenerated(User lastGenerated) {
+        this.lastGenerated = lastGenerated;
+    }
     
     
 }

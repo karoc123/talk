@@ -9,10 +9,6 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-/**
- *
- * @author karoc
- */
 @RequestScoped
 public class UserService {
     
