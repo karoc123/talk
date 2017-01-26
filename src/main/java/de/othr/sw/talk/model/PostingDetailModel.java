@@ -6,16 +6,13 @@ import de.othr.sw.talk.entity.User;
 import de.othr.sw.talk.service.PostingService;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class PostingModel implements Serializable{
+public class PostingDetailModel implements Serializable{
     
     @Inject
     private PostingService postingService;
@@ -27,6 +24,25 @@ public class PostingModel implements Serializable{
     private Date date;
     private User user;
     private Category category;
+    private long id;
+
+    public void loadData() {
+        Posting post = postingService.getPostingById(this.id);
+        this.category = post.getCategory();
+        this.link = post.getLink();
+        this.date = post.getDatum();
+        this.text = post.getText();
+        this.title = post.getTitle();
+        this.user = post.getUser();
+    }
+    
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getLink() {
         return link;
@@ -74,21 +90,5 @@ public class PostingModel implements Serializable{
 
     public void setTitle(String title) {
         this.title = title;
-    }
-    
-    public String create(){
-        Posting post = postingService.createPosting(new Posting(this.link, this.title, this.category, userModel.getLastGenerated(), this.text));
-        return "viewposting.xhtml?faces-redirect=true&includeViewParams=true&post=" + post.getId();
-    }
-    
-    public List<Posting> allPostings() {
-        return this.postingService.getAllPostings();
-    }
-    
-    public List<Posting> allPostingsByCategory() {
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String cat = params.get("cat");
-        System.out.println(cat);
-        return this.postingService.getAllPostingsByCategory(cat);
     }
 }

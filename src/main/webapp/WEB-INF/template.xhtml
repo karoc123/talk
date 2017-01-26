@@ -24,10 +24,12 @@
               <div class="ui simple dropdown item">
                 Categorys <i class="dropdown icon"></i>
                 <div class="menu">
-                  <h:link class="item" value="View Categorys" outcome="/views/usermanagement" />
+                  <h:link class="item" value="View Categories" outcome="/views/usermanagement" />
                   <div class="divider"></div>
-                  <h:link class="item" value="User management" outcome="/views/usermanagement" />
-                  <h:link class="item" value="Category management" outcome="/views/category" />
+                  <ui:repeat value="#{categoryModel.allCategorys}" var="category">
+                        <h:link class="item" value="#{category.name}" outcome="/views/viewcategory?cat=#{category.name}">
+                        </h:link>
+                  </ui:repeat>
                 </div>
               </div>
                 
@@ -39,13 +41,13 @@
                   <h:link class="item" value="User management" outcome="/views/usermanagement" />
                   <h:link class="item" value="Category management" outcome="/views/category" />
                   <div class="divider"></div>
-                  <div class="header">Header Item</div>
+                  <div class="header">Other Project</div>
                   <div class="item">
                     <i class="dropdown icon"></i>
-                    Sub Menu
+                    Advertisements
                     <div class="menu">
-                      <a class="item" href="#">Link Item</a>
-                      <a class="item" href="#">Link Item</a>
+                      <a class="item" href="#">Manage advertisements</a>
+                      <a class="item" href="#">Load remote advertisement</a>
                     </div>
                   </div>
                   <a class="item" href="#">Link Item</a>
@@ -64,7 +66,7 @@
             </div>
         </div>
         <div id="bottom">
-            <ui:insert name="bottom">&copy; Tobias Zink</ui:insert>
+            <ui:insert name="bottom">&copy; no copyright</ui:insert>
         </div>
 
     </h:body>

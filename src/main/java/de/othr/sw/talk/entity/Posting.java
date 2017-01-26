@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,14 +12,16 @@ import javax.persistence.Table;
 public class Posting extends Content implements Serializable {
 
     private String link, title;
+    
+    @ManyToOne
     private Category category;
     
     public Posting() {
         super();
     }
 
-    public Posting(String link, String title, Category cat, User user, String text, Date datum) {
-        super(user, text, datum);
+    public Posting(String link, String title, Category cat, User user, String text) {
+        super(user, text, new Date());
         this.link = link;
         this.title = title;
         this.category = cat;

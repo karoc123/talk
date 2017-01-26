@@ -2,7 +2,6 @@ package de.othr.sw.talk.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -30,8 +28,8 @@ public class Content implements Serializable {
     @Column
     private String text;
     
-    @Temporal(TemporalType.DATE)
-    private Date datum;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
     
     public Content() {
         
@@ -40,7 +38,7 @@ public class Content implements Serializable {
     public Content(User user, String text, Date datum) {
         this.user = user;
         this.text = text;
-        this.datum = datum;
+        this.creationDate = datum;
     }
 
     public long getId() {
@@ -68,11 +66,11 @@ public class Content implements Serializable {
     }
 
     public Date getDatum() {
-        return datum;
+        return creationDate;
     }
 
     public void setDatum(Date datum) {
-        this.datum = datum;
+        this.creationDate = datum;
     }
     
     

@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <f:metadata>
+        <f:viewParam name="post" value="#{postingDetailModel.id}" />
+        <f:viewParam name="post" value="#{commentModel.postingId}" />
+        <f:event type="preRenderView" listener="#{postingDetailModel.loadData}"/>
+        <f:event type="preRenderView" listener="#{commentModel.loadData}"/>
+    </f:metadata>
+    <h:head>
+        <title>#{postingDetailModel.title}</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+
+                <div class="ui items">
+                    <div class="item">
+                        <div class="content">
+                                  <a href="#{postingDetailModel.link}" class="header">#{postingDetailModel.title}</a>
+                                  <div class="description">
+                                      <p>#{postingDetailModel.text}</p>
+                                  </div>
+                                  <div class="extra">Subbmitted by #{postingDetailModel.user.userId} 
+                                      on #{postingDetailModel.date} in #{postingDetailModel.category}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h:form class="ui reply form">
+                    <h:inputText value="#{commentModel.parentCommentId}"/>
+                    <div class="field">
+                        <h:inputTextarea value="#{commentModel.text}"/>
+                    </div>
+                    <div class="ui blue labeled submit icon button">
+                        <i class="icon edit"></i>
+                        <h:commandLink style="color: white;" action="#{commentModel.create()}" value="Add Reply"/>
+                    </div>
+                </h:form>  
+                
+                <h:dataTable class="ui celled table" var="u" value="#{commentModel.allCommentsForPosting()}">
+                        <h:column>
+                            <h:outputText value="#{u.id}"/>
+                        </h:column>
+                        <h:column>
+                            <h:outputText value="#{u.parent}"/>
+                        </h:column>
+                        <h:column>
+                            <h:outputText value="#{u.posting.id}"/>
+                        </h:column>
+                        <h:column>
+                            <h:outputText value="#{u.user.userId}"/>
+                        </h:column>
+                        <h:column>
+                            <h:outputText value="#{u.text}"/>
+                        </h:column>
+                    </h:dataTable>
+                
+                <div class="ui threaded comments">
+                      <h3 class="ui dividing header">Comments</h3>
+                      <div class="comment">
+                        <a class="avatar">
+                          <img src="../assets/images/dummy.png" />
+                        </a>
+                        <div class="content">
+                          <a class="author">Matt</a>
+                          <div class="metadata">
+                            <span class="date">Today at 5:42PM</span>
+                          </div>
+                          <div class="text">How artistic! </div>
+                          <div class="actions">
+                            <a class="reply">Reply</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="comment">
+                        <a class="avatar">
+                          <img src="../assets/images/dummy.png" />
+                        </a>
+                        <div class="content">
+                          <a class="author">Elliot Fu</a>
+                          <div class="metadata">
+                            <span class="date">Yesterday at 12:30AM</span>
+                          </div>
+                          <div class="text">
+                            <p>This has been very useful for my research. Thanks as well!</p>
+                          </div>
+                          <div class="actions">
+                            <a class="reply">Reply</a>
+                          </div>
+                        </div>
+                        <div class="comments">
+                          <div class="comment">
+                            <a class="avatar">
+                              <img src="../assets/images/dummy.png"/>
+                            </a>
+                            <div class="content">
+                              <a class="author">Jenny Hess</a>
+                              <div class="metadata">
+                                <span class="date">Just now</span>
+                              </div>
+                              <div class="text">Elliot you are always so right :) </div>
+                              <div class="actions">
+                                <a class="reply">Reply</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="comment">
+                        <a class="avatar">
+                          <img src="../assets/images/dummy.png" />
+                        </a>
+                        <div class="content">
+                          <a class="author">Joe Henderson</a>
+                          <div class="metadata">
+                            <span class="date">5 days ago</span>
+                          </div>
+                          <div class="text">Dude, this is awesome. Thanks so much </div>
+                          <div class="actions">
+                            <a class="reply">Reply</a>
+                          </div>
+                        </div>
+                      </div>
+                      <form class="ui reply form">
+                        <div class="field">
+                          <textarea></textarea>
+                        </div>
+                        <div class="ui blue labeled submit icon button"><i class="icon edit"></i> Add Reply </div>
+                      </form>
+                    </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
