@@ -4,12 +4,10 @@ import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Posting;
 import de.othr.sw.talk.entity.User;
 import de.othr.sw.talk.service.PostingService;
-import de.othr.sw.talk.service.UserService;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,7 +21,7 @@ public class PostingModel implements Serializable{
     @Inject
     private UserModel userModel;
     
-    private String link, text;
+    private String link, text, title;
     private Date date;
     private User user;
     private Category category;
@@ -67,10 +65,17 @@ public class PostingModel implements Serializable{
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
     
     public void create(){
-        postingService.createPosting(new Posting(this.link, userModel.getLastGenerated(), this.text, this.date));
+        postingService.createPosting(new Posting(this.link, this.title, this.category, userModel.getLastGenerated(), this.text, this.date));
     }
     
     public List<Posting> allPostings() {

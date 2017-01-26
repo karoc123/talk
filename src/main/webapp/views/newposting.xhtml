@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>New posting</title>
     </h:head>
@@ -14,18 +15,30 @@
                 <h2>New Posting</h2>
 
 
-                <h:form>
-                    <h:outputText value="Text"/>
-                    <h:inputText value="#{postingModel.text}"/>
+                <h:form class="ui form">
+                    <h:outputText value="Category"/>
+                    <h:selectOneMenu value="#{postingModel.category}">
+                        <f:converter binding="#{categoryModel.injectedCategoryConverter}"/>
+                        <f:selectItems value="#{categoryModel.allCategorys}"/>
+                    </h:selectOneMenu>
                     <br/>
                     <h:outputText value="Link"/>
                     <h:inputText value="#{postingModel.link}"/>
                     <br/>
-                    <h:commandButton action="#{postingModel.create()}" value="anlegen"/>
+                    <h:outputText value="Title"/>
+                    <h:inputText value="#{postingModel.title}"/>
+                    <br/>
+                    <h:outputText value="Text"/>
+                    <h:inputTextarea value="#{postingModel.text}"/>
+                    <br/>
+                    <h:commandButton action="#{postingModel.create()}" value="Create"/>
 
                     <br/>
                     <br/>
-                    <h:dataTable var="u" value="#{postingModel.allPostings()}">
+                    <h:dataTable class="ui celled table" var="u" value="#{postingModel.allPostings()}">
+                        <h:column>
+                            <h:outputText value="#{u.title}"/>
+                        </h:column>
                         <h:column>
                             <h:outputText value="#{u.text}"/>
                         </h:column>
@@ -33,7 +46,10 @@
                             <h:outputText value="#{u.link}"/>
                         </h:column>
                         <h:column>
-                            x
+                            <h:outputText value="#{u.user.userId}"/>
+                        </h:column>
+                        <h:column>
+                            <h:outputText value="#{u.category.name}"/>
                         </h:column>
                     </h:dataTable>
 
@@ -42,4 +58,3 @@
         </ui:composition>
     </h:body>
 </html>
-

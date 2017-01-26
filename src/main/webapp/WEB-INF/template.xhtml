@@ -20,12 +20,24 @@
                 <img class="logo" src="../assets/images/logo.png" />
                 Talk
               </a>
+                
+              <div class="ui simple dropdown item">
+                Categorys <i class="dropdown icon"></i>
+                <div class="menu">
+                  <h:link class="item" value="View Categorys" outcome="/views/usermanagement" />
+                  <div class="divider"></div>
+                  <h:link class="item" value="User management" outcome="/views/usermanagement" />
+                  <h:link class="item" value="Category management" outcome="/views/category" />
+                </div>
+              </div>
+                
               <h:link class="item" value="New Posting" outcome="/views/newposting" />
+              
               <div class="ui simple dropdown item">
                 Administration <i class="dropdown icon"></i>
                 <div class="menu">
                   <h:link class="item" value="User management" outcome="/views/usermanagement" />
-                  <a class="item" href="#">Link Item</a>
+                  <h:link class="item" value="Category management" outcome="/views/category" />
                   <div class="divider"></div>
                   <div class="header">Header Item</div>
                   <div class="item">
@@ -39,6 +51,7 @@
                   <a class="item" href="#">Link Item</a>
                 </div>
               </div>
+              
             </div>
         </div>
         <div id="top">

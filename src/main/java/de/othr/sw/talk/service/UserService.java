@@ -24,6 +24,7 @@ public class UserService {
     @Transactional(TxType.REQUIRED)
     public void deleteUser(User toDelete){
         User user = em.merge(toDelete);
+        //TODO: delete every posting of this user or there will be a error!
         em.remove(user);
     }
     

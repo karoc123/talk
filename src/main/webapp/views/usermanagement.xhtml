@@ -14,18 +14,18 @@
                 <h2>Userverwaltung:</h2>
 
 
-                <h:form>
+                <h:form class="ui form">
                     <h:outputText value="Username:"/>
                     <h:inputText value="#{userModel.username}"/>
                     <br/>
                     <h:outputText value="Password:"/>
                     <h:inputSecret value="#{userModel.password}"/>
                     <br/>
-                    <h:commandButton action="#{userModel.create()}" value="anlegen"/>
+                    <h:commandButton action="#{userModel.create()}" value="Create"/>
 
                     <br/>
                     <br/>
-                    <h:dataTable var="u" value="#{userModel.allUsers()}">
+                    <h:dataTable class="ui celled table" var="u" value="#{userModel.allUsers()}">
                         <h:column>
                             <h:outputText value="#{u.userId}"/>
                         </h:column>
