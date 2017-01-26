@@ -7,7 +7,6 @@ import de.othr.sw.talk.service.PostingService;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,12 +36,20 @@ public class CommentModel implements Serializable{
     
     public void create(){
         this.parent = postingService.getCommentById(this.parentCommentId);
-        postingService.createComment(new Comment(this.parent, this.posting, this.user, this.text));
+        Comment com = postingService.createComment(new Comment(this.parent, this.posting, this.user, this.text));
         this.text = "";
     }
 
     public List<Comment> allCommentsForPosting() {
         return this.postingService.getAllCommentsByPostingId(postingId);
+    }
+
+    public List<Comment> allRootCommentsForPosting() {
+        return this.postingService.getallRootCommentsForPosting(postingId);
+    }
+    
+    public List<Comment> allChildComments() {
+        return this.postingService.allChildCommentsForPosting(postingId);
     }
     
     public long getParentCommentId() {

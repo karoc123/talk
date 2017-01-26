@@ -3,7 +3,9 @@ package de.othr.sw.talk.model;
 import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Posting;
 import de.othr.sw.talk.entity.User;
+import de.othr.sw.talk.entity.VotePosting;
 import de.othr.sw.talk.service.PostingService;
+import de.othr.sw.talk.service.UserService;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -21,13 +23,33 @@ public class PostingModel implements Serializable{
     private PostingService postingService;
     
     @Inject
+    private UserService userService;
+    
+    @Inject
     private UserModel userModel;
     
+    private long id;
     private String link, text, title;
     private Date date;
     private User user;
     private Category category;
 
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public String getLink() {
         return link;
     }

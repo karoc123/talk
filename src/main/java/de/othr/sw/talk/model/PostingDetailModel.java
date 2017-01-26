@@ -3,6 +3,7 @@ package de.othr.sw.talk.model;
 import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Posting;
 import de.othr.sw.talk.entity.User;
+import de.othr.sw.talk.entity.VotePosting;
 import de.othr.sw.talk.service.PostingService;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,15 +26,21 @@ public class PostingDetailModel implements Serializable{
     private User user;
     private Category category;
     private long id;
+    private Posting post;
 
     public void loadData() {
-        Posting post = postingService.getPostingById(this.id);
+        post = postingService.getPostingById(this.id);
         this.category = post.getCategory();
         this.link = post.getLink();
         this.date = post.getDatum();
         this.text = post.getText();
         this.title = post.getTitle();
         this.user = post.getUser();
+    }
+ 
+    public void voteUp(){
+        post = this.postingService.getPostingById(this.id);
+        this.postingService.votePosting(new VotePosting(true, post, this.user));
     }
     
     public long getId() {

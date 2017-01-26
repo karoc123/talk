@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 @WebService
 @RequestScoped
 public class AdvertisementService { 
+
     @PersistenceContext(unitName="TalkPU")
     private EntityManager em;
     
@@ -17,4 +18,5 @@ public class AdvertisementService {
         //dummy
         return "dummy link to the advertisement";
     }
+    
 }

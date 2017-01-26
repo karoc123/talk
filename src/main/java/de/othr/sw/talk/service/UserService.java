@@ -36,6 +36,10 @@ public class UserService {
         return false;
     }
     
+    public User getUserById(String username){
+        return em.find(User.class, username);
+    }
+    
     public List<User> getAllUser() {
         TypedQuery<User> query = em.createQuery("SELECT u FROM User AS u", User.class);
         return query.getResultList();

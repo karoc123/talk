@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>New posting</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+
+                <div class="ui divided items">
+                    <ui:repeat value="#{postingModel.allPostings()}" var="posting">
+                        <div class="item">
+                          <div class="content">
+                              <div class="header">#{posting.title}</div>
+                            <div class="meta">
+                                <span>Category: 
+                                    <h:link class="item" value="#{posting.category.name}" outcome="/views/viewcategory?cat=#{posting.category.name}">
+                                    </h:link>
+                                </span> |
+                                <a href="#{posting.link}">
+                                  <span>Follow Link</span>
+                                </a> | 
+                              <h:link value="View more" outcome="/views/viewposting?post=#{posting.id}">
+                              </h:link> | 
+                                <span>From: #{posting.user.userId}</span>
+                            </div>
+                          </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

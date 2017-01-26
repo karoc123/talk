@@ -20,17 +20,27 @@ public class Comment extends Content implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Posting posting;
     
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Comment> childComments;
+    
     public Comment() {
         super();
     }
 
+    public void addCommentToChildList(Comment com){
+        this.childComments.add(com);
+    }
     public Comment(Comment parent, Posting posting, User user, String text) {
         super(user, text, new Date());
         this.parent = parent;
-
+        this.childComments = new ArrayList<>();
         this.posting = posting;
     }
 
+    public boolean hasChild(){
+        return !childComments.isEmpty();
+    }
+    
     public Comment getParent() {
         return parent;
     }

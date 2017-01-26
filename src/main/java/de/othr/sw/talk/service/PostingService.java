@@ -3,6 +3,8 @@ package de.othr.sw.talk.service;
 import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Comment;
 import de.othr.sw.talk.entity.Posting;
+import de.othr.sw.talk.entity.User;
+import de.othr.sw.talk.entity.VotePosting;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
@@ -63,6 +65,13 @@ public class PostingService {
 
     @Transactional
     public Comment createComment(Comment newComment){
+        if(newComment.getParent() != null){
+            Comment parent = em.find(Comment.class, newComment.getParent().getId());
+            if(parent != null){
+                parent.addCommentToChildList(newComment);
+            }
+            em.persist(parent);            
+        }
         em.persist(newComment);
         return newComment;
     }
@@ -83,5 +92,25 @@ public class PostingService {
         TypedQuery<Comment> query;
         query = em.createQuery("SELECT u FROM Comment u WHERE u.parent = :parent ORDER BY u.creationDate DESC", Comment.class);
         return query.setParameter("parent", com).getResultList();        
+    }
+
+    public List<Comment> getallRootCommentsForPosting(long postingId) {
+        Posting post = this.getPostingById(postingId);
+        TypedQuery<Comment> query;
+        query = em.createQuery("SELECT u FROM Comment u WHERE u.posting = :posting AND u.parent IS NULL ORDER BY u.creationDate DESC", Comment.class);
+        return query.setParameter("posting", post).getResultList();       
+   }
+
+    public List<Comment> allChildCommentsForPosting(long postingId) {
+        Posting post = this.getPostingById(postingId);
+        TypedQuery<Comment> query;
+        query = em.createQuery("SELECT u FROM Comment u WHERE u.posting = :posting AND u.parent IS NOT NULL ORDER BY u.creationDate DESC", Comment.class);
+        return query.setParameter("posting", post).getResultList();      }
+
+    @Transactional
+    public void votePosting(VotePosting newVote) {
+        newVote.setPosting(em.merge(newVote.getPosting()));
+        newVote.setUser(em.merge(newVote.getUser()));
+        em.persist(newVote);
     }
 }
