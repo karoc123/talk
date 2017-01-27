@@ -19,6 +19,13 @@
                         Log-in to your account
                       </div>
                     </h2>
+                    
+                    <ui:repeat value="#{messageModel.messages}" var="m">
+                        <div class="ui error message">
+                            #{m}
+                        </div>
+                    </ui:repeat>
+                    
                     <h:form class="ui large form">
                       <div class="ui stacked segment">
                         <div class="field">
@@ -38,10 +45,8 @@
                           </h:commandLink>
                       </div>
 
-                      <div class="ui error message"></div>
-
                     </h:form>
-
+    
                     <div class="ui message">
                       New to us? <a href="register.xhtml">Register your own account!</a>
                     </div>

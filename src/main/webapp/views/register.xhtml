@@ -19,6 +19,11 @@
                         Register your account
                       </div>
                     </h2>
+                    <ui:repeat value="#{messageModel.messages}" var="m">
+                        <div class="ui error message">
+                            #{m}
+                        </div>
+                    </ui:repeat>
                     <h:form class="ui large form">
                       <div class="ui stacked segment">
                         <div class="field">
@@ -37,11 +42,6 @@
                               <div class="ui fluid large submit button">Register</div>
                           </h:commandLink>
                       </div>
-
-                        <div class="ui error message">
-                            #{loginModel.errors}
-                        </div>
-
                     </h:form>
                 </div>
             </ui:define>

@@ -7,6 +7,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
         <h:outputStylesheet name="css/default.css"/>
         <h:outputStylesheet name="semantic/semantic.min.css"/>
         <h:outputScript name="semantic/jquery-3.1.1.min.js" />
@@ -15,12 +16,9 @@
     </h:head>
 
     <h:body>
-        <div class="ui fixed inverted menu">
+        <div class="ui stackable inverted menu">
             <div class="ui container">
-              <a href="home.xhtml" class="header item">
-                <img class="logo" src="../assets/images/logo.png" />
-                Home
-              </a>
+              <h:link class="header item" value="Home" outcome="/views/home" />
                 
               <div class="ui simple dropdown item">
                 Categorys <i class="dropdown icon"></i>
@@ -36,13 +34,7 @@
               
             <c:if test="#{loginModel.isAuthenticated}">
                 <h:link class="item" value="New Posting" outcome="/views/newposting" />
-            </c:if>
-
-              <c:if test="#{!loginModel.isAuthenticated}">
-                  <h:link class="item" value="Login" outcome="/views/login" />
-              </c:if>
-              
-              <c:if test="#{loginModel.isAuthenticated}">
+                
                 <div class="ui simple dropdown item">
                   Administration <i class="dropdown icon"></i>
                   <div class="menu">
@@ -61,12 +53,21 @@
                     <a class="item" href="#">Link Item</a>
                   </div>
                 </div>
-                  
-                <h:link class="item" value="#{loginModel.username} " outcome="/views/useroverview">
-                </h:link>
-
-              </c:if>
+            </c:if>
               
+            <div class="right menu">
+              <c:if test="#{!loginModel.isAuthenticated}">
+                  <h:link class="item primary button" value="Login" outcome="/views/login">
+                      &nbsp; <i class="chevron circle right icon"></i>
+                  </h:link>
+              </c:if>
+                  
+              <c:if test="#{loginModel.isAuthenticated}">
+                <h:link class="item" value="#{loginModel.username} " outcome="/views/useroverview">
+                    &nbsp; <i class="setting icon"></i>
+                </h:link>
+              </c:if>
+            </div>
             </div>
         </div>
         <div id="top">
@@ -79,7 +80,14 @@
             </div>
         </div>
         <div id="bottom">
-            <ui:insert name="bottom">&copy; love me, i'm a footer</ui:insert>
+            <ui:insert name="bottom">
+                <br />
+                <hr />
+
+                &copy; Tobias Zink - Softwareentwicklung 2017
+                <br />
+                &copy; love me, i'm a footer
+            </ui:insert>
         </div>
 
     </h:body>

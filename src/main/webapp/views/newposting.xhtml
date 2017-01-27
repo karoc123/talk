@@ -31,28 +31,8 @@
                     <h:outputText value="Text"/>
                     <h:inputTextarea value="#{postingModel.text}"/>
                     <br/>
-                    <h:commandButton action="#{postingModel.create()}" value="Create"/>
-
                     <br/>
-                    <br/>
-                    <h:dataTable class="ui celled table" var="u" value="#{postingModel.allPostings()}">
-                        <h:column>
-                            <h:outputText value="#{u.title}"/>
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="#{u.text}"/>
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="#{u.link}"/>
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="#{u.user.userId}"/>
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="#{u.category.name}"/>
-                        </h:column>
-                    </h:dataTable>
-
+                    <h:commandButton class="ui primary button" action="#{postingModel.create()}" value="Create"/>
                 </h:form>
             </ui:define>
         </ui:composition>

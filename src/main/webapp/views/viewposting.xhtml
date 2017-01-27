@@ -44,17 +44,19 @@
                     </div>
                 </div>
                 
-                <h:form class="ui reply form">
-                    <h:inputText value="#{commentModel.parentCommentId}"/>
-                    <div class="field">
-                        <h:inputTextarea value="#{commentModel.text}"/>
-                    </div>
-                    <div class="ui blue labeled submit icon button">
-                        <i class="icon edit"></i>
-                        <h:commandLink style="color: white;" action="#{commentModel.create()}" value="Add Reply"/>
-                    </div>
-                </h:form>  
-                
+                <c:if test="#{loginModel.isAuthenticated}">
+                    <h:form class="ui reply form">
+                       <h:inputHidden value="#{commentModel.parentCommentId}"/>
+                       <div class="field">
+                           <h:inputTextarea value="#{commentModel.text}"/>
+                       </div>
+                       <div class="ui blue labeled submit icon button">
+                           <i class="icon edit"></i>
+                           <h:commandLink style="color: white;" action="#{commentModel.create()}" value="Add Reply"/>
+                       </div>
+                   </h:form>                 
+                </c:if>
+
                 <h:dataTable class="ui celled table" var="u" value="#{commentModel.allCommentsForPosting()}">
                         <h:column>
                             <h:outputText value="#{u.id}"/>
