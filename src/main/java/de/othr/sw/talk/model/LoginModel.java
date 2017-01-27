@@ -1,6 +1,7 @@
 
 package de.othr.sw.talk.model;
 
+import de.othr.sw.talk.entity.User;
 import de.othr.sw.talk.service.UserService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
@@ -17,12 +18,14 @@ public class LoginModel implements Serializable{
     
     private String username, password, errors;
 
-    public UserService getUserService() {
-        return userService;
+    private User user;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUser(User u) {
+        this.user = u;
     }
 
     public String getUsername() {
@@ -58,12 +61,35 @@ public class LoginModel implements Serializable{
     }
     
     public String authenticate(){
-        if (this.userService.authenticate(this.username, this.password)){
+        user = this.userService.authenticate(this.username, this.password);
+        if (user != null){
             this.isAuthenticated = true;
             return "home.xhtml";
         } else {
+            this.isAuthenticated = false;
             this.errors = "wrong username or password";
             return "login.xhtml";
         }
     }
+ 
+    public String logout(){
+        this.isAuthenticated = false;
+        this.user = null;
+        this.username = "";
+        this.password = "";
+        return "home.xhtml";
+    }
+    
+    public String register(){
+         if (this.userService.checkIfUsernameIsFree(this.username)){
+            this.user = this.userService.createUser(new User(this.username, this.password));
+            this.isAuthenticated = true;
+            return "home.xhtml";
+        } else {
+            this.isAuthenticated = false;
+            this.user = null;
+            this.errors = "Username is already in use!";
+            return "register.xhtml";
+        }       
+    } 
 }

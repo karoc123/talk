@@ -27,13 +27,16 @@
                                   <div class="description">
                                       <p>#{postingDetailModel.text}</p>
                                   </div>
-                                  <div class="extra">Subbmitted by #{postingDetailModel.user.userId} 
-                                      on #{postingDetailModel.date} in #{postingDetailModel.category}</div>
+                                  <div class="extra">
+                                      Subbmitted by #{postingDetailModel.user.userId} 
+                                      on #{postingDetailModel.date} in #{postingDetailModel.category} - 
+                                      Votes: #{postingDetailModel.voting}
+                                  </div>
                                       <div class="extra">
                                           <h:form>
-                                            <h:inputHidden value="#{postingDetailModel.user}" />
-                                            <h:inputHidden value="#{postingDetailModel.id}" />
-                                            <h:commandLink action="#{postingDetailModel.voteUp()}" value="VOTE UP"/>          
+                                            <h:commandLink action="#{postingDetailModel.voteUp()}" value="VOTE UP">
+                                                <f:param name="post" value="#{postingDetailModel.id}" />
+                                            </h:commandLink>
                                           </h:form>
                                             
                                       </div>

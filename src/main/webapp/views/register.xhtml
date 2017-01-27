@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>New posting</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+
+                <div class="column">
+                    <h2 class="ui image header">
+                      <div class="content">
+                        Register your account
+                      </div>
+                    </h2>
+                    <h:form class="ui large form">
+                      <div class="ui stacked segment">
+                        <div class="field">
+                          <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <h:inputText p:placeholder="Username" value="#{loginModel.username}"/>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <h:inputSecret p:placeholder="Password" value="#{loginModel.password}"/>
+                          </div>
+                        </div>
+                          <h:commandLink action="#{loginModel.register()}" value="">
+                              <div class="ui fluid large submit button">Register</div>
+                          </h:commandLink>
+                      </div>
+
+                        <div class="ui error message">
+                            #{loginModel.errors}
+                        </div>
+
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

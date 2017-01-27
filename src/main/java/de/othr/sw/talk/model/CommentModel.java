@@ -21,6 +21,9 @@ public class CommentModel implements Serializable{
     @Inject
     private UserModel userModel;
     
+    @Inject
+    private LoginModel loginModel; 
+    
     private String text;
     private Date date;
     private User user;
@@ -31,7 +34,7 @@ public class CommentModel implements Serializable{
     
     public void loadData() {
         this.posting = postingService.getPostingById(this.postingId);
-        this.user = userModel.getLastGenerated();
+        this.user = loginModel.getUser();
     }
     
     public void create(){

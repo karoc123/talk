@@ -2,6 +2,8 @@ package de.othr.sw.talk.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -24,12 +27,17 @@ public class Content implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Vote> vote;
+    
     @Lob
     @Column
     private String text;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
+    
+    private int voting;
     
     public Content() {
         
@@ -39,6 +47,23 @@ public class Content implements Serializable {
         this.user = user;
         this.text = text;
         this.creationDate = datum;
+        this.voting = 0;
+    }
+
+    public int getVoting() {
+        return voting;
+    }
+
+    public void setVoting(int voting) {
+        this.voting = voting;
+    }
+
+    public Set<Vote> getVote() {
+        return vote;
+    }
+
+    public void setVote(Set<Vote> vote) {
+        this.vote = vote;
     }
 
     public long getId() {

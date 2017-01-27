@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -32,27 +33,39 @@
                   </ui:repeat>
                 </div>
               </div>
-                
-              <h:link class="item" value="New Posting" outcome="/views/newposting" />
               
-              <div class="ui simple dropdown item">
-                Administration <i class="dropdown icon"></i>
-                <div class="menu">
-                  <h:link class="item" value="User management" outcome="/views/usermanagement" />
-                  <h:link class="item" value="Category management" outcome="/views/category" />
-                  <div class="divider"></div>
-                  <div class="header">Other Project</div>
-                  <div class="item">
-                    <i class="dropdown icon"></i>
-                    Advertisements
-                    <div class="menu">
-                      <a class="item" href="#">Manage advertisements</a>
-                      <a class="item" href="#">Load remote advertisement</a>
+            <c:if test="#{loginModel.isAuthenticated}">
+                <h:link class="item" value="New Posting" outcome="/views/newposting" />
+            </c:if>
+
+              <c:if test="#{!loginModel.isAuthenticated}">
+                  <h:link class="item" value="Login" outcome="/views/login" />
+              </c:if>
+              
+              <c:if test="#{loginModel.isAuthenticated}">
+                <div class="ui simple dropdown item">
+                  Administration <i class="dropdown icon"></i>
+                  <div class="menu">
+                    <h:link class="item" value="User management" outcome="/views/usermanagement" />
+                    <h:link class="item" value="Category management" outcome="/views/category" />
+                    <div class="divider"></div>
+                    <div class="header">Other Project</div>
+                    <div class="item">
+                      <i class="dropdown icon"></i>
+                      Advertisements
+                      <div class="menu">
+                        <a class="item" href="#">Manage advertisements</a>
+                        <a class="item" href="#">Load remote advertisement</a>
+                      </div>
                     </div>
+                    <a class="item" href="#">Link Item</a>
                   </div>
-                  <a class="item" href="#">Link Item</a>
                 </div>
-              </div>
+                  
+                <h:link class="item" value="#{loginModel.username} " outcome="/views/useroverview">
+                </h:link>
+
+              </c:if>
               
             </div>
         </div>
@@ -66,7 +79,7 @@
             </div>
         </div>
         <div id="bottom">
-            <ui:insert name="bottom">&copy; no copyright</ui:insert>
+            <ui:insert name="bottom">&copy; love me, i'm a footer</ui:insert>
         </div>
 
     </h:body>

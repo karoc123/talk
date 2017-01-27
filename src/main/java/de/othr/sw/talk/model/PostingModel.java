@@ -3,7 +3,7 @@ package de.othr.sw.talk.model;
 import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Posting;
 import de.othr.sw.talk.entity.User;
-import de.othr.sw.talk.entity.VotePosting;
+import de.othr.sw.talk.entity.Vote;
 import de.othr.sw.talk.service.PostingService;
 import de.othr.sw.talk.service.UserService;
 import java.io.Serializable;
@@ -27,6 +27,9 @@ public class PostingModel implements Serializable{
     
     @Inject
     private UserModel userModel;
+ 
+    @Inject
+    private LoginModel loginModel;
     
     private long id;
     private String link, text, title;
@@ -99,7 +102,7 @@ public class PostingModel implements Serializable{
     }
     
     public String create(){
-        Posting post = postingService.createPosting(new Posting(this.link, this.title, this.category, userModel.getLastGenerated(), this.text));
+        Posting post = postingService.createPosting(new Posting(this.link, this.title, this.category, loginModel.getUser(), this.text));
         return "viewposting.xhtml?faces-redirect=true&includeViewParams=true&post=" + post.getId();
     }
     

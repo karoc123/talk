@@ -3,16 +3,18 @@ package de.othr.sw.talk.model;
 import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Posting;
 import de.othr.sw.talk.entity.User;
-import de.othr.sw.talk.entity.VotePosting;
+import de.othr.sw.talk.entity.Vote;
 import de.othr.sw.talk.service.PostingService;
 import java.io.Serializable;
 import java.util.Date;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class PostingDetailModel implements Serializable{
     
     @Inject
@@ -21,12 +23,16 @@ public class PostingDetailModel implements Serializable{
     @Inject
     private UserModel userModel;
     
+    @Inject
+    private LoginModel loginModel;
+    
     private String link, text, title;
     private Date date;
     private User user;
     private Category category;
     private long id;
     private Posting post;
+    private int voting;
 
     public void loadData() {
         post = postingService.getPostingById(this.id);
@@ -36,11 +42,20 @@ public class PostingDetailModel implements Serializable{
         this.text = post.getText();
         this.title = post.getTitle();
         this.user = post.getUser();
+        this.voting = post.getVoting();
     }
  
     public void voteUp(){
         post = this.postingService.getPostingById(this.id);
-        this.postingService.votePosting(new VotePosting(true, post, this.user));
+        this.postingService.upVotePosting(post, new Vote(true, loginModel.getUser()));
+    }
+
+    public int getVoting() {
+        return voting;
+    }
+
+    public void setVoting(int voting) {
+        this.voting = voting;
     }
     
     public long getId() {

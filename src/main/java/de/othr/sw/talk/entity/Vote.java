@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="VotePosting")
-public class VotePosting implements Serializable {
+@Table(name="Vote")
+public class Vote implements Serializable {
 
     @Id
     @NotNull
@@ -22,17 +22,13 @@ public class VotePosting implements Serializable {
     private boolean vote;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    private Posting posting;
-    
-    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    public VotePosting() {
+    public Vote() {
     }
 
-    public VotePosting(boolean vote, Posting posting, User user) {
+    public Vote(boolean vote, User user) {
         this.vote = vote;
-        this.posting = posting;
         this.user = user;
     }
 
@@ -50,14 +46,6 @@ public class VotePosting implements Serializable {
 
     public void setVote(boolean vote) {
         this.vote = vote;
-    }
-
-    public Posting getPosting() {
-        return posting;
-    }
-
-    public void setPosting(Posting posting) {
-        this.posting = posting;
     }
 
     public User getUser() {

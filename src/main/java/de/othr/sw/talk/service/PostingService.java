@@ -4,7 +4,9 @@ import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Comment;
 import de.othr.sw.talk.entity.Posting;
 import de.othr.sw.talk.entity.User;
-import de.othr.sw.talk.entity.VotePosting;
+import de.othr.sw.talk.entity.Vote;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
@@ -108,9 +110,15 @@ public class PostingService {
         return query.setParameter("posting", post).getResultList();      }
 
     @Transactional
-    public void votePosting(VotePosting newVote) {
-        newVote.setPosting(em.merge(newVote.getPosting()));
+    public void upVotePosting(Posting post, Vote newVote) {
+        post = em.merge(post);
+        post.setVoting(post.getVoting()+1);
+        if(post.getVote() == null){
+            post.setVote(new HashSet<Vote>());
+        }
+        post.getVote().add(newVote);
         newVote.setUser(em.merge(newVote.getUser()));
+        em.persist(post);
         em.persist(newVote);
     }
 }

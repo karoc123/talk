@@ -28,12 +28,12 @@ public class UserService {
         em.remove(user);
     }
     
-    public boolean authenticate(String username, String password){
+    public User authenticate(String username, String password){
         User u = em.find(User.class, username);
         if(u != null && u.getPassword().equals(password)){
-            return true;
+            return u;
         }
-        return false;
+        return null;
     }
     
     public User getUserById(String username){
@@ -44,5 +44,12 @@ public class UserService {
         TypedQuery<User> query = em.createQuery("SELECT u FROM User AS u", User.class);
         return query.getResultList();
     }
+
+    public boolean checkIfUsernameIsFree(String username) {
+        if(em.find(User.class, username) != null){
+            return false;
+        }
+        return true;
+   }
     
 }
