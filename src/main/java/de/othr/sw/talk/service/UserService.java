@@ -1,6 +1,7 @@
 package de.othr.sw.talk.service;
 
 import de.othr.sw.talk.entity.User;
+import de.othr.sw.talk.entity.util.EntityUtils;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
@@ -30,8 +31,15 @@ public class UserService {
     
     public User authenticate(String username, String password){
         User u = em.find(User.class, username);
-        if(u != null && u.getPassword().equals(password)){
-            return u;
+        if(u != null){
+            try {
+                if( EntityUtils.hashPassword(password, u.getSalt(), User.HASH_ALGORITHM).equals(u.getPassword()) )
+                    return u;
+                else 
+                    return null;
+            } catch (EntityUtils.EntityUtilException ex) {
+                throw new RuntimeException("password can not be hashed", ex);
+            }
         }
         return null;
     }

@@ -15,7 +15,7 @@ public class LoginModel implements Serializable{
     private UserService userService;
     
     @Inject
-    private MessageModel mesageModel;
+    private MessageModel messageModel;
     
     private boolean isAuthenticated = false;
     
@@ -67,11 +67,12 @@ public class LoginModel implements Serializable{
         user = this.userService.authenticate(this.username, this.password);
         if (user != null){
             this.isAuthenticated = true;
+            this.messageModel.cleanOutMessages();
             return "home.xhtml";
         } else {
             this.isAuthenticated = false;
-            this.mesageModel.cleanOutMessages();
-            this.mesageModel.addMessage("Username or password wrong!");
+            this.messageModel.cleanOutMessages();
+            this.messageModel.addMessage("Username or password wrong!");
             return "login.xhtml";
         }
     }
@@ -88,13 +89,14 @@ public class LoginModel implements Serializable{
          if (this.userService.checkIfUsernameIsFree(this.username)){
             this.user = this.userService.createUser(new User(this.username, this.password));
             this.isAuthenticated = true;
+            this.messageModel.cleanOutMessages();
             return "home.xhtml";
         } else {
             this.isAuthenticated = false;
             this.user = null;
             this.username = "";
-            this.mesageModel.cleanOutMessages();
-            this.mesageModel.addMessage("Username is already registered!");
+            this.messageModel.cleanOutMessages();
+            this.messageModel.addMessage("Username is already registered!");
             return "register.xhtml";
         }       
     } 
