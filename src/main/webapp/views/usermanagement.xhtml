@@ -16,13 +16,13 @@
 
                 <h:form class="ui form">
                     <h:outputText value="Username:"/>
-                    <h:inputText value="#{userModel.username}"/>
+                    <h:inputText required="true" value="#{userModel.username}"/>
                     <br/>
                     <h:outputText value="Password:"/>
-                    <h:inputSecret value="#{userModel.password}"/>
+                    <h:inputSecret required="true" value="#{userModel.password}"/>
                     <br/>
-                    <h:commandButton action="#{userModel.create()}" value="Create"/>
-
+                    <br/>
+                    <h:commandButton class="ui fluid large primary button" action="#{userModel.create()}" value="Create"/>
                     <br/>
                     <br/>
                     <h:dataTable class="ui celled table" var="u" value="#{userModel.allUsers()}">
@@ -30,7 +30,7 @@
                             <h:outputText value="#{u.userId}"/>
                         </h:column>
                         <h:column>
-                            <h:outputText value="#{u.password}"/>
+                            <h:outputText value="#{u.shortPassword}"/>
                         </h:column>
                         <h:column>
                             <h:commandButton action="#{userModel.delete(u)}" value="X"/>

@@ -2,8 +2,10 @@
 package de.othr.sw.talk.model;
 
 import de.othr.sw.talk.entity.User;
+import de.othr.sw.talk.service.SeedingService;
 import de.othr.sw.talk.service.UserService;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,6 +15,9 @@ import javax.inject.Named;
 public class LoginModel implements Serializable{
     @Inject
     private UserService userService;
+
+    @Inject
+    private SeedingService seedingService;
     
     @Inject
     private MessageModel messageModel;
@@ -23,6 +28,14 @@ public class LoginModel implements Serializable{
 
     private User user;
 
+    public LoginModel() {
+    }
+
+    @PostConstruct
+    public void testdata() {
+        seedingService.generateTestdata();
+    }
+    
     public User getUser() {
         return user;
     }

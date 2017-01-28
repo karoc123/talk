@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Manage Advertisements</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+
+                <h2>Manage Advertisements</h2>
+
+
+                <h:form class="ui form">
+                    <h:outputText value="Advertisement link"/>
+                    <h:inputText value="#{advertisementModel.link}"/>
+                    <br/>
+                    <br/>
+                    <h:outputText value="Advertisement text"/>
+                    <h:inputTextarea value="#{advertisementModel.text}"/>
+                    <br/>
+                    <br/>
+                    <h:commandButton class="ui fluid large button" action="#{advertisementModel.create()}" value="Create ad"/>
+                    <br/>
+                    <h:commandButton class="ui fluid large button" action="#{advertisementModel.createRemoteAd()}" value="Load remote ad"/>
+                    <br/>
+                    <hr />
+                    
+                </h:form>
+                
+                <h:dataTable class="ui celled table" var="u" value="#{advertisementModel.allAdvertisements}">
+                    <h:column>
+                        <h:outputText value="#{u.creationDate}"/>
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{u.link}"/>
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{u.text}"/>
+                    </h:column>
+                </h:dataTable>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

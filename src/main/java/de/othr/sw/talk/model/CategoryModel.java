@@ -20,13 +20,22 @@ public class CategoryModel implements Serializable {
     private PostingService postingService;
     
     @Inject
+    private MessageModel mesasgeModel;
+    
+    @Inject
     private CategoryConverterImpl injectedCategoryConverter;
     
     private String name;
     private List<Category> allCategorys;
 
     public void create(){
-        postingService.createCategory(new Category(this.name));
+        if(postingService.createCategory(new Category(this.name)) == null)
+        {
+            mesasgeModel.cleanOutMessages();
+            mesasgeModel.addMessage("Category already there!");
+        } else {
+            mesasgeModel.cleanOutMessages();
+        } 
         this.name = null;
     }
 

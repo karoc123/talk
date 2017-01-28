@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
-        <title>New posting</title>
+        <title>User overview</title>
     </h:head>
     <h:body>
         <ui:composition template="../WEB-INF/template.xhtml">
@@ -20,9 +20,7 @@
                       </div>
                     </h2>
                     <h:form class="ui large form">
-                          <h:commandLink action="#{loginModel.logout()}" value="">
-                              <div class="ui fluid large submit button">Logout</div>
-                          </h:commandLink>
+                          <h:commandButton class="ui fluid large submit button" action="#{loginModel.logout()}" value="Logout"/>
 
                     </h:form>
                 </div>

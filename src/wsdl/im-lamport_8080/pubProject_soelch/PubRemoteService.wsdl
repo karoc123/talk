@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.stefan_soelch.othr.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PubRemoteServiceService" targetNamespace="http://service.stefan_soelch.othr.de/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.stefan_soelch.othr.de/" elementFormDefault="unqualified" targetNamespace="http://service.stefan_soelch.othr.de/" version="1.0">
+
+  <xs:element name="findAllReservations" type="tns:findAllReservations"/>
+
+  <xs:element name="findAllReservationsResponse" type="tns:findAllReservationsResponse"/>
+
+  <xs:complexType name="findAllReservations">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="findAllReservationsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:reservation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="reservation">
+    <xs:complexContent>
+      <xs:extension base="tns:generatedIntegerIdEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="date" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="endTime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="guest" type="tns:guest"/>
+          <xs:element name="personCount" type="xs:int"/>
+          <xs:element minOccurs="0" name="restaurant" type="tns:restaurant"/>
+          <xs:element minOccurs="0" name="startTime" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="generatedIntegerIdEntity">
+    <xs:complexContent>
+      <xs:extension base="tns:singleIdEntity">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="singleIdEntity">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="guest">
+    <xs:complexContent>
+      <xs:extension base="tns:user">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="user">
+    <xs:complexContent>
+      <xs:extension base="tns:stringIdEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="salt" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="stringIdEntity">
+    <xs:complexContent>
+      <xs:extension base="tns:singleIdEntity">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="restaurant">
+    <xs:complexContent>
+      <xs:extension base="tns:generatedIntegerIdEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element name="occupiedSeats" type="xs:int"/>
+          <xs:element name="seats" type="xs:int"/>
+          <xs:element minOccurs="0" name="webAddress" type="tns:webAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="webAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="street" type="xs:string"/>
+      <xs:element minOccurs="0" name="town" type="xs:string"/>
+      <xs:element minOccurs="0" name="url" type="xs:string"/>
+      <xs:element name="zipCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="food">
+    <xs:complexContent>
+      <xs:extension base="tns:product">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="product">
+    <xs:complexContent>
+      <xs:extension base="tns:generatedIntegerIdEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element name="price" type="xs:long"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="menu">
+    <xs:complexContent>
+      <xs:extension base="tns:product">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="drink">
+    <xs:complexContent>
+      <xs:extension base="tns:product">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="findAllReservations">
+    <wsdl:part element="tns:findAllReservations" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findAllReservationsResponse">
+    <wsdl:part element="tns:findAllReservationsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PubRemoteService">
+    <wsdl:operation name="findAllReservations">
+      <wsdl:input message="tns:findAllReservations" name="findAllReservations">
+    </wsdl:input>
+      <wsdl:output message="tns:findAllReservationsResponse" name="findAllReservationsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PubRemoteServiceServiceSoapBinding" type="tns:PubRemoteService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="findAllReservations">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findAllReservations">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findAllReservationsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PubRemoteServiceService">
+    <wsdl:port binding="tns:PubRemoteServiceServiceSoapBinding" name="PubRemoteServicePort">
+      <soap:address location="http://im-lamport:8080/pubProject_soelch/PubRemoteService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

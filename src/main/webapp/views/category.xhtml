@@ -11,16 +11,25 @@
 
             <ui:define name="content">
 
-                <h2>Manage Categorys</h2>
+                <h2>Manage Categories</h2>
 
-
+                <ui:repeat value="#{messageModel.messages}" var="m">
+                    <div class="ui error message">
+                        #{m}
+                    </div>
+                </ui:repeat>
+                
                 <h:form class="ui form">
                     <h:outputText value="Category Name:"/>
-                    <h:inputText value="#{categoryModel.name}"/>
+                    <h:inputText required="true" value="#{categoryModel.name}"/>
                     <br/>
-                    <h:commandButton action="#{categoryModel.create()}" value="Create"/>
+                    <br/>
+                    <h:commandButton class="ui fluid large primary button" action="#{categoryModel.create()}" value="Create category"/>
 
                     <br/>
+                </h:form>
+                <h4>All Categories:</h4>
+                <h:form>
                     <h:dataTable class="ui celled table" var="u" value="#{categoryModel.allCategorys}">
                         <h:column>
                             <h:outputText value="#{u.name}"/>
@@ -29,7 +38,6 @@
                             <h:commandButton action="#{categoryModel.delete(u)}" value="X"/>
                         </h:column>
                     </h:dataTable>
-
                 </h:form>
             </ui:define>
         </ui:composition>

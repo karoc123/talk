@@ -40,8 +40,12 @@ public class PostingService {
     
     @Transactional
     public Category createCategory(Category newCategory){
-        em.persist(newCategory);
-        return newCategory;
+        if(em.find(Category.class, newCategory.toString()) == null){
+            em.persist(newCategory);
+            return newCategory;
+        } else {
+            return null;
+        }
     }
     
     public Category getCategoryByString(String cat){

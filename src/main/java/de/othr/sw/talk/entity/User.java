@@ -57,6 +57,10 @@ public class User extends StringIdEntity implements Serializable {
     public String getPassword() {
         return password;
     }
+    
+    public String getShortPassword(){
+        return this.password.substring(0, Math.min(30, this.password.length())).concat("...");
+    }
 
     public void setPassword(String password) {
         this.password = password;

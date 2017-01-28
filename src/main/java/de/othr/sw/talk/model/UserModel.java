@@ -25,14 +25,6 @@ public class UserModel implements Serializable{
         this.password = null;
     }
     
-//    public String authenticate(){
-//        if (this.userService.authenticate(this.username, this.password) != null){
-//            return "home.xhtml";
-//        } else {
-//            return "login.xhtml";
-//        }
-//    }
-    
     public List<User> allUsers() {
         return this.userService.getAllUser();
     }

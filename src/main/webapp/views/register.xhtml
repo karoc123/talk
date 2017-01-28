@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
-        <title>New posting</title>
+        <title>Register</title>
     </h:head>
     <h:body>
         <ui:composition template="../WEB-INF/template.xhtml">
@@ -29,18 +29,16 @@
                         <div class="field">
                           <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <h:inputText p:placeholder="Username" value="#{loginModel.username}"/>
+                            <h:inputText required="true" p:placeholder="Username" value="#{loginModel.username}"/>
                           </div>
                         </div>
                         <div class="field">
                           <div class="ui left icon input">
                             <i class="lock icon"></i>
-                            <h:inputSecret p:placeholder="Password" value="#{loginModel.password}"/>
+                            <h:inputSecret required="true" p:placeholder="Password" value="#{loginModel.password}"/>
                           </div>
                         </div>
-                          <h:commandLink action="#{loginModel.register()}" value="">
-                              <div class="ui fluid large submit button">Register</div>
-                          </h:commandLink>
+                          <h:commandButton class="ui fluid large submit button" action="#{loginModel.register()}" value="Register"/>
                       </div>
                     </h:form>
                 </div>
