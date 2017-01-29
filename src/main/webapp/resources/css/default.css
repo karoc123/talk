@@ -6,11 +6,52 @@ body {
     margin:1em auto;
     padding:0 .62em;
     font:1.2em/1.62em sans-serif;
+    
 }
 
 #content {
     margin: auto;
-    max-width:60em;
+    max-width:800px;
+}
+
+#site {
+    overflow: auto; float: none; clear: both
+}
+
+@media screen and (max-width: 1400px) {
+    #left, #right {
+        display: none;
+   }   
+}
+
+#left {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
+    background-color: #ddd;
+    border-color: #ddd;
+    box-sizing: border-box;
+    border-radius: 4px;
+    
+    padding: 1em;
+    margin-top: 2em;
+    margin-left: 50px;
+    float: left;
+    width:250px;
+}
+
+#right {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
+    background-color: #ddd;
+    border-color: #ddd;
+    box-sizing: border-box;
+    border-radius: 4px;
+    
+    padding: 1em;
+    margin-top: 2em;
+    margin-right: 50px;
+    float: right;
+    width:250px;
 }
 
 #top {
@@ -43,6 +84,22 @@ a:link:hover, a:visited:hover  {
 
 h1,h2,h3 {
     line-height:1.2em;
+}
+
+.button.true {
+    background-image: url("../../assets/images/up_arrow_blue.png");
+}
+
+.button.false {
+    background-image: url("../../assets/images/up_arrow_black.png");
+}
+
+.header a:link {
+    color: black;
+}
+
+.header a:link:hover, .header a:visited:hover  {
+    color: orange;
 }
 
 @media print{body{max-width:none}}

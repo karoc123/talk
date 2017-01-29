@@ -10,6 +10,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * 
+ * @author karoc
+ */
 @Entity
 @Table(name="Advertisement")
 public class Advertisement extends GeneratedIdEntity implements Serializable {
@@ -23,39 +27,75 @@ public class Advertisement extends GeneratedIdEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
+    /**
+     * 
+     * @param link
+     * @param text 
+     */
     public Advertisement(String link, String text) {
         this.link = link;
         this.text = text;
         this.creationDate = new Date();
     }
 
+    /**
+     * 
+     */
     public Advertisement() {
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getLink() {
         return link;
     }
 
+    /**
+     * 
+     * @param link 
+     */
     public void setLink(String link) {
         this.link = link;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * 
+     * @param text 
+     */
     public void setText(String text) {
         this.text = text;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Date getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * 
+     * @param creationDate 
+     */
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
     
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString(){
         return this.text;

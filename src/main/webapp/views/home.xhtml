@@ -15,8 +15,13 @@
                 <div class="ui divided items">
                     <ui:repeat value="#{postingModel.allPostings()}" var="posting">
                         <div class="item">
+                            <div>
+                                <a class="ui basic right pointing label">
+                                  #{posting.voting}
+                                </a>
+                            </div>
                           <div class="content">
-                              <div class="header">#{posting.title}</div>
+                              <div class="header"><a href="#{posting.link}">#{posting.title}</a></div>
                             <div class="meta">
                                 <span>Category: 
                                     <h:link class="item" value="#{posting.category.name}" outcome="/views/viewcategory?cat=#{posting.category.name}">

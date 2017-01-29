@@ -8,6 +8,10 @@ import de.othr.sw.talk.entity.Vote;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.BinaryOperator;
+import java.util.function.Supplier;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -114,15 +118,53 @@ public class PostingService {
         return query.setParameter("posting", post).getResultList();      }
 
     @Transactional
-    public void upVotePosting(Posting post, Vote newVote) {
+    public void updateVotePosting(Posting post, User user, boolean vote) {
         post = em.merge(post);
-        post.setVoting(post.getVoting()+1);
+        
         if(post.getVote() == null){
-            post.setVote(new HashSet<Vote>());
+            post.setVote(new HashSet<>());
         }
-        post.getVote().add(newVote);
-        newVote.setUser(em.merge(newVote.getUser()));
-        em.persist(post);
-        em.persist(newVote);
+        
+        //check if voted, if not create vote
+        Set<Vote> votes = post.getVote();
+        if(!votes.stream().anyMatch((v) -> (v.getUser().equals(user)))){
+            //create new vote
+            Vote newVote = new Vote(vote, user);
+            post.getVote().add(newVote);
+            newVote.setUser(em.merge(newVote.getUser()));
+            em.persist(post);
+            em.persist(newVote);
+            
+            if(vote){
+                post.setVoting(post.getVoting()+1);
+            } else {
+                post.setVoting(post.getVoting()-1);
+            }
+        } else {
+            //already voted, change vote
+            Optional<Vote> newVote;
+            newVote = votes.stream()
+                    .filter(((v) -> (v.getUser().equals(user))))
+                    .findFirst();
+            
+            // change vote on posting
+            if(newVote.get().isVote() != vote){
+               if(vote){
+                   post.setVoting(post.getVoting()+2);
+               } else {
+                   post.setVoting(post.getVoting()-2);
+               }               
+            }
+
+            newVote.get().setVote(vote);
+            em.persist(post);
+            em.persist(newVote.get());
+        }
+    }
+
+    @Transactional
+    public boolean checkIfUserVoted(Posting post, User user){
+        Set<Vote> votes = post.getVote();
+        return votes.stream().anyMatch((v) -> (v.getUser().equals(user)));
     }
 }

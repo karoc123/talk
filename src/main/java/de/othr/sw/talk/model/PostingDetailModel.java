@@ -33,6 +33,7 @@ public class PostingDetailModel implements Serializable{
     private long id;
     private Posting post;
     private int voting;
+    private boolean voted;
 
     public void loadData() {
         post = postingService.getPostingById(this.id);
@@ -43,13 +44,36 @@ public class PostingDetailModel implements Serializable{
         this.title = post.getTitle();
         this.user = post.getUser();
         this.voting = post.getVoting();
+        this.voted = postingService.checkIfUserVoted(post, loginModel.getUser());
+    }
+
+    public boolean isVoted() {
+        return voted;
+    }
+
+    public boolean getVoted() {
+        return voted;
+    }
+    public void setVoted(boolean voted) {
+        this.voted = voted;
     }
  
     public void voteUp(){
-        post = this.postingService.getPostingById(this.id);
-        this.postingService.upVotePosting(post, new Vote(true, loginModel.getUser()));
+        if(loginModel.isIsAuthenticated()){
+           post = this.postingService.getPostingById(this.id);
+           this.postingService.updateVotePosting(post, loginModel.getUser(), true);
+            this.voted = true;
+        }
     }
-
+ 
+    public void voteDown(){
+        if(loginModel.isIsAuthenticated()){
+           post = this.postingService.getPostingById(this.id);
+           this.postingService.updateVotePosting(post, loginModel.getUser(), false);
+            this.voted = true;
+        }
+    }
+    
     public int getVoting() {
         return voting;
     }

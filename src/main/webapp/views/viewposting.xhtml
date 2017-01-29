@@ -12,6 +12,7 @@
         <f:event type="preRenderView" listener="#{postingDetailModel.loadData}"/>
         <f:event type="preRenderView" listener="#{commentModel.loadData}"/>
     </f:metadata>
+    
     <h:head>
         <title>#{postingDetailModel.title}</title>
     </h:head>
@@ -19,7 +20,7 @@
         <ui:composition template="../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-
+                <div style="overflow: auto;">
                 <div class="ui items">
                     <div class="item">
                         <div class="content">
@@ -30,16 +31,36 @@
                                   <div class="extra">
                                       Subbmitted by #{postingDetailModel.user.userId} 
                                       on #{postingDetailModel.date} in #{postingDetailModel.category} - 
-                                      Votes: #{postingDetailModel.voting}
+                                      Votes: #{postingDetailModel.voting} | 
+                                      Voted: #{postingDetailModel.voted}
                                   </div>
+                                  <c:if test="#{loginModel.isAuthenticated}">
                                       <div class="extra">
                                           <h:form>
-                                            <h:commandLink action="#{postingDetailModel.voteUp()}" value="VOTE UP">
-                                                <f:param name="post" value="#{postingDetailModel.id}" />
-                                            </h:commandLink>
+                                            <div class="ui labeled basic button #{postingDetailModel.voted}">
+                                                <h:commandLink action="#" value="">
+                                                    <f:param name="post" value="#{postingDetailModel.id}" />
+                                                    <div class="ui basic button"><i class="heart icon"></i> Like </div>
+                                                      <a class="ui basic left pointing label">
+                                                        #{postingDetailModel.voting}
+                                                      </a>
+                                                </h:commandLink>
+                                            </div>
+                                              
+                                            <div class="ui buttons #{postingDetailModel.voted}">
+                                                <h:commandLink action="#{postingDetailModel.voteUp()}" value="">
+                                                    <f:param name="post" value="#{postingDetailModel.id}" />
+                                                    <button class="ui button up green #{postingDetailModel.voted}">Vote Up</button>
+                                                </h:commandLink>
+                                                  <div class="or"></div>
+                                                <h:commandLink action="#{postingDetailModel.voteDown()}" value="">
+                                                    <f:param name="post" value="#{postingDetailModel.id}" />
+                                                    <button class="ui button down red #{postingDetailModel.voted}">Vote Down</button>
+                                                </h:commandLink>
+                                            </div>
                                           </h:form>
-                                            
                                       </div>
+                                </c:if>
                         </div>
                     </div>
                 </div>
@@ -196,6 +217,7 @@
                         <div class="ui blue labeled submit icon button"><i class="icon edit"></i> Add Reply </div>
                       </form>
                     </div>-->
+                </div>
             </ui:define>
         </ui:composition>
     </h:body>

@@ -5,6 +5,7 @@ import de.othr.sw.talk.entity.Advertisement;
 import de.othr.sw.talk.entity.User;
 import de.othr.stefan_soelch.service.*;
 import java.util.List;
+import java.util.Random;
 import javax.enterprise.context.RequestScoped;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
@@ -31,13 +32,13 @@ public class AdvertisementService {
      * Create and persist a new advertisement
      * @param link A hyperlink to some other website
      * @param text Text of the advertisement
-     * @return 
+     * @return link to add management
      */
     @Transactional
     public String createAdvertisement(String link, String text){
         Advertisement newAd = new Advertisement(link, text);      
         em.persist(newAd);
-        return "dummy link to the advertisement";
+        return "ZinkTalk/faces/views/managead.xhtml";
     }
 
     /**
@@ -49,6 +50,9 @@ public class AdvertisementService {
         return query.getResultList();
     }
 
+    /**
+     * 
+     */
     @Transactional
     public void createRemoteAdvertisement() {
         
@@ -74,6 +78,19 @@ public class AdvertisementService {
             System.out.println(ex.toString());
         }
 
+    }
+
+    /**
+     * A random advertisment from the database
+     * @return 
+     */
+    public Advertisement getRandomAdvertisement() {
+        Random generator = new Random(); 
+
+        TypedQuery<Advertisement> query = em.createQuery("SELECT u FROM Advertisement AS u ORDER BY u.creationDate DESC", Advertisement.class);
+        List<Advertisement> ad = query.getResultList();
+        if(ad.isEmpty()) return null;
+        return ad.get(generator.nextInt(ad.size()));
     }
     
 }

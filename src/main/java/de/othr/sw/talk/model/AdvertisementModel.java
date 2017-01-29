@@ -2,16 +2,11 @@
 package de.othr.sw.talk.model;
 
 import de.othr.sw.talk.entity.Advertisement;
-import de.othr.sw.talk.entity.Category;
-import de.othr.sw.talk.entity.converter.CategoryConverterImpl;
 import de.othr.sw.talk.service.AdvertisementService;
-import de.othr.sw.talk.service.PostingService;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -61,5 +56,14 @@ public class AdvertisementModel implements Serializable {
 
     public List<Advertisement> getAllAdvertisements() {
         return this.advertisementService.getAllAdvertisements();
+    }
+    
+    public Advertisement getRandomAd(){
+        Advertisement ad = this.advertisementService.getRandomAdvertisement();
+        
+        if (ad == null){
+            ad = new Advertisement("#", "Please create some ads");
+        }
+        return ad;
     }
 }
