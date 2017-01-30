@@ -11,12 +11,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class PostingModel implements Serializable{
     
     @Inject
@@ -37,6 +38,26 @@ public class PostingModel implements Serializable{
     private User user;
     private Category category;
 
+    private long numberOfPostings;
+    private int postingPaginationStart;
+
+    public long getNumberOfPostings() {
+        return numberOfPostings;
+    }
+
+    public void setNumberOfPostings(long numberOfPostings) {
+        this.numberOfPostings = numberOfPostings;
+    }
+
+    public int getPostingPaginationStart() {
+        return postingPaginationStart;
+    }
+
+    public void setPostingPaginationStart(int postingPaginationStart) {
+        if(postingPaginationStart < 0) this.postingPaginationStart = 0;
+        if(postingPaginationStart < this.numberOfPostings) this.postingPaginationStart = postingPaginationStart;
+    }
+    
     public UserModel getUserModel() {
         return userModel;
     }
@@ -109,7 +130,12 @@ public class PostingModel implements Serializable{
     public List<Posting> allPostings() {
         return this.postingService.getAllPostings();
     }
-    
+ 
+    public List<Posting> allPostingsForPage() {
+        this.numberOfPostings = this.postingService.getNumberOfPostingsForAll();
+        return this.postingService.getAllPostings(this.postingPaginationStart, 10);
+    }
+        
     public List<Posting> allPostingsByCategory() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         String cat = params.get("cat");

@@ -16,6 +16,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.transaction.Transactional;
 
 @RequestScoped
@@ -34,6 +37,25 @@ public class PostingService {
         TypedQuery<Posting> query = em.createQuery("SELECT u FROM Posting AS u ORDER BY u.creationDate DESC", Posting.class);
         return query.getResultList();
     }
+    
+    public List<Posting> getAllPostings(int postingPaginationStart, int count) {
+        TypedQuery<Posting> query;
+        query = em.createQuery(
+                "SELECT u FROM Posting AS u ORDER BY u.creationDate DESC",
+                Posting.class);
+        return query
+                .setMaxResults(count)
+                .setFirstResult(postingPaginationStart)
+                .getResultList();
+    }
+    
+    public Long getNumberOfPostingsForAll() {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(Posting.class)));
+        ParameterExpression<Integer> p = qb.parameter(Integer.class);
+        return em.createQuery(cq).getSingleResult();
+   }
  
     public List<Posting> getAllPostingsByCategory(String category) {
         Category cat = this.getCategoryByString(category);

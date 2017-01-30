@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Home</title>
     </h:head>
@@ -13,7 +14,7 @@
             <ui:define name="content">
 
                 <div class="ui divided items">
-                    <ui:repeat value="#{postingModel.allPostings()}" var="posting">
+                    <ui:repeat value="#{postingModel.allPostingsForPage()}" var="posting">
                         <div class="item">
                             <div>
                                 <a class="ui basic right pointing label">
@@ -38,6 +39,13 @@
                         </div>
                     </ui:repeat>
                 </div>
+                
+                <h:form>
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(0)}" value="First Page"/> | 
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart-10)}" value="Page Before"/> | 
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart+10)}" value="Next Page"/>
+                    
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
