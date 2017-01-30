@@ -1,6 +1,7 @@
 package de.othr.sw.talk.service;
 
 import de.othr.sw.talk.entity.User;
+import de.othr.sw.talk.entity.UserInformation;
 import de.othr.sw.talk.entity.util.EntityUtils;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -59,5 +60,14 @@ public class UserService {
         }
         return true;
    }
+
+    @Transactional
+    public void changeEmail(String email, User user) {
+        user = em.merge(user);
+        if(user.getUserInformation() == null){
+            user.setUserInformation(new UserInformation());
+        }
+        user.getUserInformation().setEmail(email);
+    }
     
 }

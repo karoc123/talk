@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class Content implements Serializable {
     private User user;
     
     @OneToMany(fetch = FetchType.EAGER)
+    @ElementCollection
     private Set<Vote> vote;
     
     @Lob

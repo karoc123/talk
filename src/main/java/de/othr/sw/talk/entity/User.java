@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -17,6 +18,9 @@ import javax.persistence.Table;
 public class User extends StringIdEntity implements Serializable {
 
     public static final String HASH_ALGORITHM = "SHA-512";
+    
+    @Embedded
+    private UserInformation userInformation;
     
     private String salt;
     private String password;
@@ -39,6 +43,15 @@ public class User extends StringIdEntity implements Serializable {
         } catch (EntityUtils.EntityUtilException ex) {
             throw new RuntimeException("password can not be hashed", ex);
         }
+        this.userInformation = new UserInformation();
+    }
+
+    public UserInformation getUserInformation() {
+        return userInformation;
+    }
+
+    public void setUserInformation(UserInformation userInformation) {
+        this.userInformation = userInformation;
     }
 
     public String getSalt() {

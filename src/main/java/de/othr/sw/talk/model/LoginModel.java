@@ -28,7 +28,7 @@ public class LoginModel implements Serializable{
     
     private boolean isAuthenticated = false;
     
-    private String username, password, errors;
+    private String username, password, errors, email;
 
     private User user;
 
@@ -38,6 +38,14 @@ public class LoginModel implements Serializable{
     @PostConstruct
     public void testdata() {
         seedingService.generateTestdata();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     public User getUser() {
@@ -84,6 +92,7 @@ public class LoginModel implements Serializable{
         user = this.userService.authenticate(this.username, this.password);
         if (user != null){
             this.isAuthenticated = true;
+            if(user.getUserInformation() != null) this.email = user.getUserInformation().getEmail();
             this.messageModel.cleanOutMessages();
             return "home.xhtml";
         } else {
@@ -93,12 +102,17 @@ public class LoginModel implements Serializable{
             return "login.xhtml";
         }
     }
+    
+    public void changeEmail() {
+        this.userService.changeEmail(this.email, this.user);
+    }
  
     public String logout(){
         this.isAuthenticated = false;
         this.user = null;
         this.username = "";
         this.password = "";
+        this.email = "";
         return "home.xhtml";
     }
     

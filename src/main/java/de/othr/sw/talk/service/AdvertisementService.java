@@ -36,7 +36,16 @@ public class AdvertisementService {
      */
     @Transactional
     public String createAdvertisement(String link, String text){
-        Advertisement newAd = new Advertisement(link, text);      
+        
+        StringBuilder url = new StringBuilder();
+
+        if (!link.startsWith("http://", 0)) {
+            url.append("http://");
+        }
+        url.append(link);
+        
+        Advertisement newAd = new Advertisement(url.toString(), text);   
+        
         em.persist(newAd);
         return "ZinkTalk/faces/views/managead.xhtml";
     }
