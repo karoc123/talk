@@ -42,8 +42,8 @@
                 
                 <h:form>
                     <h:commandLink action="#{postingModel.setPostingPaginationStart(0)}" value="First Page"/> | 
-                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart-10)}" value="Page Before"/> | 
-                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart+10)}" value="Next Page"/>
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart-10)}" value="">&laquo; Page Before</h:commandLink> | 
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart+10)}" value="Next Page"> &raquo;</h:commandLink>
                     
                 </h:form>
             </ui:define>

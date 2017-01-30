@@ -80,6 +80,8 @@ public class AdvertisementService {
                         .concat(" - Seats available: ")
                         .concat(String.valueOf(result.get(0).getRestaurant().getSeats()-result.get(0).getRestaurant().getOccupiedSeats()));
                 this.createAdvertisement(link, text);               
+            } else {
+                System.out.println("Results where empty, sorry!");
             }
         } catch (Exception ex) {
             // TODO handle custom exceptions here

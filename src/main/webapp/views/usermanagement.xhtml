@@ -25,6 +25,8 @@
                     <h:commandButton class="ui fluid large primary button" action="#{userModel.create()}" value="Create"/>
                     <br/>
                     <br/>
+                </h:form>
+                <h:form class="ui form">
                     <h:dataTable class="ui celled table" var="u" value="#{userModel.allUsers()}">
                         <h:column>
                             <h:outputText value="#{u.userId}"/>
@@ -35,8 +37,7 @@
                         <h:column>
                             <h:commandButton action="#{userModel.delete(u)}" value="X"/>
                         </h:column>
-                    </h:dataTable>
-
+                    </h:dataTable>                    
                 </h:form>
             </ui:define>
         </ui:composition>

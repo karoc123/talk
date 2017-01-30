@@ -20,6 +20,16 @@
         <ui:composition template="../WEB-INF/template.xhtml">
 
             <ui:define name="content">
+                <script type="text/javascript">
+                    $( document ).ready(function() {
+
+                        $( ".button.up.true" ).addClass( "grey" ).removeClass("green");
+                        $( ".button.down.true" ).addClass( "grey" ).removeClass("red");
+                        console.log( "document loaded" );
+                    });
+
+                </script>
+                
                 <div style="overflow: auto;">
                 <div class="ui items">
                     <div class="item">
