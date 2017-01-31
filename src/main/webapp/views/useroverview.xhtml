@@ -20,6 +20,10 @@
                       </div>
                     </h2>
                     <h:form class="ui large form">
+                        <h:outputText value="Change your Password:"/>
+                        <h:inputSecret p:placeholder="Password" required="true" value="#{loginModel.password}">
+                        </h:inputSecret>
+                        <br /> <br />
                         <h:outputText value="Change your eMail:"/>
                         <h:inputText p:placeholder="E-Mail" required="true" value="#{loginModel.email}">
                             <f:validator validatorId="de.othr.sw.talk.entity.util.EmailValidator" />
@@ -27,12 +31,14 @@
                         <br/>
                         <br />
                         <h:commandButton class="ui fluid large primary button" action="#{loginModel.changeEmail()}" value="Change"/>
+                        <br/>
                     </h:form>
                     <hr/>
                     <br />
                     <h:form class="ui large form">
+                          <h:link class="ui fluid large submit button" value="Export your links" outcome="/views/linkexport" />
+                          <br />
                           <h:commandButton class="ui fluid large submit button" action="#{loginModel.logout()}" value="Logout"/>
-
                     </h:form>
                 </div>
             </ui:define>

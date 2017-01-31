@@ -6,7 +6,9 @@ import de.othr.sw.talk.entity.User;
 import de.othr.stefan_soelch.service.*;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +24,9 @@ import javax.xml.ws.WebServiceRef;
 @RequestScoped
 public class AdvertisementService { 
 
+    @Inject
+    private Logger log;
+    
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/im-lamport_8080/pubProject_soelch/PubRemoteService.wsdl")
     private PubRemoteServiceService service;
 
@@ -47,6 +52,7 @@ public class AdvertisementService {
         Advertisement newAd = new Advertisement(url.toString(), text);   
         
         em.persist(newAd);
+        log.info("Ad created: " + newAd.toString() );
         return "ZinkTalk/faces/views/managead.xhtml";
     }
 
@@ -67,7 +73,6 @@ public class AdvertisementService {
         
         try { // Call Web Service Operation
             PubRemoteService port = service.getPubRemoteServicePort();
-            // TODO process result here
             java.util.List<Reservation> result;
             result = port.findAllReservations();
             System.out.println("Result = "+result);

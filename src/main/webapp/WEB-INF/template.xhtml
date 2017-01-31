@@ -24,7 +24,7 @@
               <div class="ui simple dropdown item">
                 Categorys <i class="dropdown icon"></i>
                 <div class="menu">
-                  <h:link class="item" value="View Categories" outcome="/views/usermanagement" />
+                  <h:link class="item" value="View Categories" outcome="/views/viewcategoryoverview" />
                   <div class="divider"></div>
                   <ui:repeat value="#{categoryModel.allCategorys}" var="category">
                         <h:link class="item" value="#{category.name}" outcome="/views/viewcategory?cat=#{category.name}">

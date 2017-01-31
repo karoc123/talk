@@ -184,9 +184,26 @@ public class PostingService {
         }
     }
 
+    /**
+     * If the user voted on the post, return = true
+     * @param post
+     * @param user
+     * @return 
+     */
     @Transactional
     public boolean checkIfUserVoted(Posting post, User user){
         Set<Vote> votes = post.getVote();
         return votes.stream().anyMatch((v) -> (v.getUser().equals(user)));
     }
+
+    /**
+     * All postings from one user
+     * @param user
+     * @return 
+     */
+    public List<Posting> getAllPostings(User user) {
+        TypedQuery<Posting> query;
+        query = em.createQuery("SELECT u FROM Posting u WHERE u.user = :user ORDER BY u.creationDate DESC", Posting.class);
+        return query.setParameter("user", user).getResultList();
+   }
 }
