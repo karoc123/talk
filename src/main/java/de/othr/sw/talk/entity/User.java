@@ -25,12 +25,14 @@ public class User extends StringIdEntity implements Serializable {
     private String salt;
     private String password;
     
+    private boolean isAdmin;
+    
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST})
     private List<Posting> postings;
     
     public User() {
         super();        
-        this.postings = new ArrayList<Posting>();
+        this.postings = new ArrayList<>();
     }
     
     public User(String userId, String password){
@@ -44,6 +46,14 @@ public class User extends StringIdEntity implements Serializable {
             throw new RuntimeException("password can not be hashed", ex);
         }
         this.userInformation = new UserInformation();
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public UserInformation getUserInformation() {

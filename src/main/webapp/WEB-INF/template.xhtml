@@ -33,9 +33,11 @@
                 </div>
               </div>
               
-            <c:if test="#{loginModel.isAuthenticated}">
+              <c:if test="#{loginModel.isAuthenticated}">
                 <h:link class="item" value="New Posting" outcome="/views/newposting" />
-                
+              </c:if>
+              
+              <c:if test="#{loginModel.isAdmin}">
                 <div class="ui simple dropdown item">
                   Administration <i class="dropdown icon"></i>
                   <div class="menu">

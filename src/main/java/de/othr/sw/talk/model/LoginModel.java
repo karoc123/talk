@@ -28,8 +28,9 @@ public class LoginModel implements Serializable{
     private MessageModel messageModel;
     
     private boolean isAuthenticated = false;
+    private boolean isAdmin = false;
     
-    private String username, password, errors, email;
+    private String username, password, errors, email, newPassword;
 
     private User user;
 
@@ -39,6 +40,22 @@ public class LoginModel implements Serializable{
     @PostConstruct
     public void testdata() {
         seedingService.generateTestdata();
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public String getEmail() {
@@ -95,6 +112,7 @@ public class LoginModel implements Serializable{
             this.isAuthenticated = true;
             if(user.getUserInformation() != null) this.email = user.getUserInformation().getEmail();
             this.messageModel.cleanOutMessages();
+            this.isAdmin = user.isIsAdmin();
             return "home.xhtml";
         } else {
             this.isAuthenticated = false;
@@ -106,14 +124,27 @@ public class LoginModel implements Serializable{
     
     public void changeEmail() {
         this.userService.changeEmail(this.email, this.user);
+        this.messageModel.cleanOutMessages();
+        this.messageModel.addMessage("Email changed!");
     }
  
+    public void changePassword() {
+        if(this.userService.changePassword(this.password, this.newPassword, this.user)){
+            this.messageModel.cleanOutMessages();
+            this.messageModel.addMessage("Password changed!");
+        } else {
+            this.messageModel.cleanOutMessages();
+            this.messageModel.addMessage("Error, password wrong?");
+        }
+    }
     public String logout(){
         this.isAuthenticated = false;
         this.user = null;
         this.username = "";
         this.password = "";
         this.email = "";
+        this.isAdmin = false;
+        this.messageModel.cleanOutMessages();
         return "home.xhtml";
     }
     

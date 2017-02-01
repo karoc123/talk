@@ -74,6 +74,15 @@ public class PostingDetailModel implements Serializable{
         }
     }
     
+    public String delete(){
+        this.post = this.postingService.getPostingById(this.id);
+        if(this.postingService.delete(this.post, loginModel.getUser())){
+            return "home.xhtml";
+        }
+        
+        return null;
+    }
+    
     public int getVoting() {
         return voting;
     }

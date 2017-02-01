@@ -26,6 +26,7 @@ public class SeedingServiceTestdata implements SeedingServiceIF {
         user.add(new User("John", "secret"));
         user.add(new User("Max", "geheim"));
         user.add(new User("Admin", "admin"));
+        user.get(2).setIsAdmin(true);
         
         category.add(new Category("Movies"));
         category.add(new Category("Technology"));

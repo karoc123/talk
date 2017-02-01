@@ -12,7 +12,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -23,6 +25,9 @@ import javax.transaction.Transactional;
 
 @RequestScoped
 public class PostingService {
+    
+    @Inject
+    private Logger log;
     
     @PersistenceContext(unitName="TalkPU")
     private EntityManager em;
@@ -136,7 +141,7 @@ public class PostingService {
     public List<Comment> allChildCommentsForPosting(long postingId) {
         Posting post = this.getPostingById(postingId);
         TypedQuery<Comment> query;
-        query = em.createQuery("SELECT u FROM Comment u WHERE u.posting = :posting AND u.parent IS NOT NULL ORDER BY u.creationDate DESC", Comment.class);
+        query = em.createQuery("SELECT u FROM Comment u WHERE u.posting = :posting AND u.parent IS NOT NULL ORDER BY u.creationDate ASC", Comment.class);
         return query.setParameter("posting", post).getResultList();      }
 
     @Transactional
@@ -206,4 +211,25 @@ public class PostingService {
         query = em.createQuery("SELECT u FROM Posting u WHERE u.user = :user ORDER BY u.creationDate DESC", Posting.class);
         return query.setParameter("user", user).getResultList();
    }
+
+    /**
+     * Delete a posting, if user = post.user OR user = admin
+     * @param post
+     * @param user
+     * @return
+     */
+    @Transactional
+    public boolean delete(Posting post, User user) {
+        post = em.merge(post);
+        user = em.merge(user);
+        
+        if(user.isIsAdmin()){
+            em.remove(post);
+            log.info("Posting deleted");
+            return true;
+        }
+        log.info("Something went wrong on posting delete");
+        return false;
+   }
+    
 }

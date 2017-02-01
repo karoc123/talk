@@ -81,6 +81,12 @@
                                                     <button class="ui button down red #{postingDetailModel.voted}">Vote Down</button>
                                                 </h:commandLink>
                                             </div>
+                                              <c:if test="#{loginModel.isAdmin}">
+                                                <h:commandLink action="#{postingDetailModel.delete()}" value="">
+                                                    <f:param name="post" value="#{postingDetailModel.id}" />
+                                                    <button class="ui button blue">Delete</button>
+                                                </h:commandLink>
+                                            </c:if>
                                           </h:form>
                                       </div>
                                 </c:if>

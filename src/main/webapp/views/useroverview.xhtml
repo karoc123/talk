@@ -19,18 +19,30 @@
                           User overview: #{loginModel.username}
                       </div>
                     </h2>
+                    <ui:repeat value="#{messageModel.messages}" var="m">
+                        <div class="ui error message">
+                            #{m}
+                        </div>
+                    </ui:repeat>
                     <h:form class="ui large form">
                         <h:outputText value="Change your Password:"/>
-                        <h:inputSecret p:placeholder="Password" required="true" value="#{loginModel.password}">
+                        <h:inputSecret p:placeholder="Old password" value="#{loginModel.password}">
+                        </h:inputSecret>
+                        <br/>
+                        <br />
+                        <h:inputSecret p:placeholder="New password" value="#{loginModel.newPassword}">
                         </h:inputSecret>
                         <br /> <br />
+                        <h:commandButton class="ui fluid large primary button" action="#{loginModel.changePassword()}" value="Change password"/>
+                        <hr />
+                        <br />
                         <h:outputText value="Change your eMail:"/>
                         <h:inputText p:placeholder="E-Mail" required="true" value="#{loginModel.email}">
                             <f:validator validatorId="de.othr.sw.talk.entity.util.EmailValidator" />
                         </h:inputText>
                         <br/>
                         <br />
-                        <h:commandButton class="ui fluid large primary button" action="#{loginModel.changeEmail()}" value="Change"/>
+                        <h:commandButton class="ui fluid large primary button" action="#{loginModel.changeEmail()}" value="Change email"/>
                         <br/>
                     </h:form>
                     <hr/>
