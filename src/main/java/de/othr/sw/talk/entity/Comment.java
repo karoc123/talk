@@ -17,9 +17,6 @@ public class Comment extends Content implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Comment parent;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Posting posting;
-    
     @OneToMany(fetch = FetchType.EAGER)
     private List<Comment> childComments;
     
@@ -34,7 +31,6 @@ public class Comment extends Content implements Serializable {
         super(user, text, new Date());
         this.parent = parent;
         this.childComments = new ArrayList<>();
-        this.posting = posting;
     }
 
     public boolean hasChild(){
@@ -49,13 +45,7 @@ public class Comment extends Content implements Serializable {
         this.parent = parent;
     }
 
-    public Posting getPosting() {
-        return posting;
+    public int compareTo(Comment c2) {
+        return c2.getDatum().compareTo(this.getDatum());
     }
-
-    public void setPosting(Posting posting) {
-        this.posting = posting;
-    }
-    
-    
 }

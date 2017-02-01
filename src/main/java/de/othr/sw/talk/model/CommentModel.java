@@ -40,7 +40,7 @@ public class CommentModel implements Serializable{
     
     public void create(){
         this.parent = postingService.getCommentById(this.parentCommentId);
-        Comment com = postingService.createComment(new Comment(this.parent, this.posting, this.user, this.text));
+        Comment com = postingService.createComment(this.posting, new Comment(this.parent, this.posting, this.user, this.text));
         this.text = "";
         this.parentCommentId = 0;
     }

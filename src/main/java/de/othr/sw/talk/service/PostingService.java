@@ -13,10 +13,12 @@ import java.util.Set;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -88,11 +90,27 @@ public class PostingService {
         return query.getResultList();
     }
     
+    /**
+     * If the category still has postings, they will all be deleted
+     * @param toDelete
+     * @return 
+     */
     @Transactional(Transactional.TxType.REQUIRED)
-    public void deleteCategory(Category toDelete){
+    public boolean deleteCategory(Category toDelete){
         Category category = em.merge(toDelete);
-        //TODO: delete every posting of this category or there will be a error!
-        em.remove(category);
+        
+        Query query;
+        query = em.createQuery("DELETE FROM Posting u WHERE u.category = :category");
+        query.setParameter("category", toDelete).executeUpdate();
+        
+        try {
+            em.remove(category);
+            log.info("Category deleted");
+            return true;
+        } catch(Exception e) {
+            log.info("Category delete error!");
+            return false;
+        }
     }
 
     public Posting getPostingById(long id) {
@@ -101,7 +119,8 @@ public class PostingService {
     }
 
     @Transactional
-    public Comment createComment(Comment newComment){
+    public Comment createComment(Posting posting, Comment newComment){
+        posting = em.merge(posting);
         if(newComment.getParent() != null){
             Comment parent = em.find(Comment.class, newComment.getParent().getId());
             if(parent != null){
@@ -109,6 +128,8 @@ public class PostingService {
             }
             em.persist(parent);            
         }
+        posting.getComments().add(newComment);
+        em.persist(posting);
         em.persist(newComment);
         return newComment;
     }
@@ -120,9 +141,7 @@ public class PostingService {
     
     public List<Comment> getAllCommentsByPostingId(long postingId) {
         Posting post = this.getPostingById(postingId);
-        TypedQuery<Comment> query;
-        query = em.createQuery("SELECT u FROM Comment u WHERE u.posting = :posting ORDER BY u.creationDate DESC", Comment.class);
-        return query.setParameter("posting", post).getResultList();
+        return post.getComments();
     }
 
     public List<Comment> getCommentChilds(Comment com) {
@@ -133,16 +152,18 @@ public class PostingService {
 
     public List<Comment> getallRootCommentsForPosting(long postingId) {
         Posting post = this.getPostingById(postingId);
-        TypedQuery<Comment> query;
-        query = em.createQuery("SELECT u FROM Comment u WHERE u.posting = :posting AND u.parent IS NULL ORDER BY u.creationDate DESC", Comment.class);
-        return query.setParameter("posting", post).getResultList();       
+        post.getComments().sort((c1, c2) -> c1.compareTo(c2));
+        return post.getComments().stream()
+            .filter(p -> null == p.getParent())
+            .collect(Collectors.toList());     
    }
 
     public List<Comment> allChildCommentsForPosting(long postingId) {
         Posting post = this.getPostingById(postingId);
-        TypedQuery<Comment> query;
-        query = em.createQuery("SELECT u FROM Comment u WHERE u.posting = :posting AND u.parent IS NOT NULL ORDER BY u.creationDate ASC", Comment.class);
-        return query.setParameter("posting", post).getResultList();      }
+        return post.getComments().stream()
+            .filter(p -> p.getParent() != null)
+            .collect(Collectors.toList());
+    }
 
     @Transactional
     public void updateVotePosting(Posting post, User user, boolean vote) {

@@ -12,6 +12,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Every posting has a category
+ */
 @Named
 @RequestScoped
 public class CategoryModel implements Serializable {
@@ -48,8 +51,10 @@ public class CategoryModel implements Serializable {
         this.allCategorys = allCategorys;
     }
     
-    
-    
+    /**
+     * call service to delete category
+     * @param toDelete 
+     */
     public void delete(Category toDelete){
         this.postingService.deleteCategory(toDelete);
     }
