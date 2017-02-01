@@ -7,6 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.UUID;
 
+/**
+ * This class is from the OTHBib, not from me
+ */
 public class EntityUtils {
 
     public static String hashPassword(String password, String salt, String algorithm) throws EntityUtilException {
@@ -34,8 +37,6 @@ public class EntityUtils {
     public static String createRandomUUID() {
         return UUID.randomUUID().toString();
     }
-    
-    
     
     public static class EntityUtilException extends Exception {
         public EntityUtilException(String message, Throwable cause) {

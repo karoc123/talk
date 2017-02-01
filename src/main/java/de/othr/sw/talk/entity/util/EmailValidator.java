@@ -1,7 +1,5 @@
 package de.othr.sw.talk.entity.util;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
@@ -11,6 +9,9 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ * This validator is written with snippets from stackoverflow
+ */
 @FacesValidator("de.othr.sw.talk.entity.util.EmailValidator")
 public class EmailValidator implements Validator {
 

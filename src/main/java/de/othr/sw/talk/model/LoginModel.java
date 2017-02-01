@@ -19,8 +19,9 @@ public class LoginModel implements Serializable{
     @Inject
     private UserService userService;
 
-    @Inject @testdata
+    //@Inject @testdata
     //@Inject @importantdata
+    @Inject
     private SeedingServiceIF seedingService;
     
     @Inject

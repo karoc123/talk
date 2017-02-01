@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 @ApplicationScoped
-@importantdata
+//@importantdata // if qualifier should work
+@Alternative
 public class SeedingServiceImportant implements SeedingServiceIF {
    
     private static final List<Category> category = new ArrayList<>();

@@ -35,12 +35,14 @@ public class CommentModel implements Serializable{
     public void loadData() {
         this.posting = postingService.getPostingById(this.postingId);
         this.user = loginModel.getUser();
+        this.parentCommentId = 0;
     }
     
     public void create(){
         this.parent = postingService.getCommentById(this.parentCommentId);
         Comment com = postingService.createComment(new Comment(this.parent, this.posting, this.user, this.text));
         this.text = "";
+        this.parentCommentId = 0;
     }
 
     public List<Comment> allCommentsForPosting() {

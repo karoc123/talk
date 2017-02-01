@@ -9,6 +9,9 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ * This validator is written with snippets from stackoverflow
+ */
 @FacesValidator("de.othr.sw.talk.entity.util.UrlValidator")
 public class UrlValidator implements Validator {
 

@@ -25,12 +25,25 @@
 
                         $( ".button.up.true" ).addClass( "grey" ).removeClass("green");
                         $( ".button.down.true" ).addClass( "grey" ).removeClass("red");
+                        
+                        // remove not child comments
+                        
+                        $( ".childcomment").each(function() {
+                            if($(this).attr("rootid") !== $(this).attr("parentid")){
+                                $(this).remove();
+                            }
+                        });
                         console.log( "document loaded" );
                     });
-
+                    
+                    function replyTo(id) {
+                        $( ".inputParentId").val(id);
+                        $( "#replyMessage").html("<h3>Reply to comment: " + id + "</h3>");
+                        console.log(id);
+                    }
                 </script>
                 
-                <div style="overflow: auto;">
+                <div >
                 <div class="ui items">
                     <div class="item">
                         <div class="content">
@@ -77,7 +90,8 @@
                 
                 <c:if test="#{loginModel.isAuthenticated}">
                     <h:form class="ui reply form">
-                       <h:inputHidden value="#{commentModel.parentCommentId}"/>
+                       <h:inputText class="inputParentId" value="#{commentModel.parentCommentId}"/>
+                        <div id="replyMessage"></div>
                        <div class="field">
                            <h:inputTextarea value="#{commentModel.text}"/>
                        </div>
@@ -87,7 +101,7 @@
                        </div>
                    </h:form>                 
                 </c:if>
-
+<!--
                 <h:dataTable class="ui celled table" var="u" value="#{commentModel.allCommentsForPosting()}">
                         <h:column>
                             <h:outputText value="#{u.id}"/>
@@ -104,7 +118,7 @@
                         <h:column>
                             <h:outputText value="#{u.text}"/>
                         </h:column>
-                    </h:dataTable>
+                    </h:dataTable>-->
  
                 <div class="ui threaded comments">
                     <h3 class="ui dividing header">Comments</h3>
@@ -116,19 +130,16 @@
                           <div class="content">
                               <a class="author">#{comment.user.userId}</a>
                             <div class="metadata">
-                                <span class="date">#{comment.datum}</span>
+                                <span class="date">#{comment.datum}</span><span>ID: #{comment.id}</span>
                             </div>
                               <div class="text">#{comment.text}</div>
                             <div class="actions">
-                              <a class="reply">Reply</a>
+                              <a href="PleaseEnableJavascript.html" onclick="replyTo(#{comment.id});return false;" class="reply">Reply</a>
                             </div>
                           </div>
-<!--                            <div class="comments">
+                            <div class="comments">
                                 <ui:repeat value="#{commentModel.allChildComments()}" var="ccoment">
-                                    <c:choose>
-                                        <c:when test="#{comment.id eq ccoment.parent.id}">
-                                            #{comment.id} #{ccoment.parent.id}
-                                            <div class="comment">
+                                            <div rootid="#{comment.id}" parentid="#{ccoment.parent.id}" class=" comment childcomment">
                                               <a class="avatar">
                                                 <img src="../assets/images/dummy.png" />
                                               </a>
@@ -139,94 +150,14 @@
                                                 </div>
                                                   <div class="text">#{ccoment.text}</div>
                                                 <div class="actions">
-                                                  <a class="reply">Reply</a>
                                                 </div>
                                               </div>
                                             </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            
-                                        </c:otherwise>
-                                    </c:choose>
-                            </ui:repeat>
-                            </div>-->
+                                </ui:repeat>
+                            </div>
                         </div>
                     </ui:repeat>
                 </div>
-                
-<!--                <div class="ui threaded comments">
-                      <h3 class="ui dividing header">Comments</h3>
-                      <div class="comment">
-                        <a class="avatar">
-                          <img src="../assets/images/dummy.png" />
-                        </a>
-                        <div class="content">
-                          <a class="author">Matt</a>
-                          <div class="metadata">
-                            <span class="date">Today at 5:42PM</span>
-                          </div>
-                          <div class="text">How artistic! </div>
-                          <div class="actions">
-                            <a class="reply">Reply</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="comment">
-                        <a class="avatar">
-                          <img src="../assets/images/dummy.png" />
-                        </a>
-                        <div class="content">
-                          <a class="author">Elliot Fu</a>
-                          <div class="metadata">
-                            <span class="date">Yesterday at 12:30AM</span>
-                          </div>
-                          <div class="text">
-                            <p>This has been very useful for my research. Thanks as well!</p>
-                          </div>
-                          <div class="actions">
-                            <a class="reply">Reply</a>
-                          </div>
-                        </div>
-                        <div class="comments">
-                          <div class="comment">
-                            <a class="avatar">
-                              <img src="../assets/images/dummy.png"/>
-                            </a>
-                            <div class="content">
-                              <a class="author">Jenny Hess</a>
-                              <div class="metadata">
-                                <span class="date">Just now</span>
-                              </div>
-                              <div class="text">Elliot you are always so right :) </div>
-                              <div class="actions">
-                                <a class="reply">Reply</a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="comment">
-                        <a class="avatar">
-                          <img src="../assets/images/dummy.png" />
-                        </a>
-                        <div class="content">
-                          <a class="author">Joe Henderson</a>
-                          <div class="metadata">
-                            <span class="date">5 days ago</span>
-                          </div>
-                          <div class="text">Dude, this is awesome. Thanks so much </div>
-                          <div class="actions">
-                            <a class="reply">Reply</a>
-                          </div>
-                        </div>
-                      </div>
-                      <form class="ui reply form">
-                        <div class="field">
-                          <textarea></textarea>
-                        </div>
-                        <div class="ui blue labeled submit icon button"><i class="icon edit"></i> Add Reply </div>
-                      </form>
-                    </div>-->
                 </div>
             </ui:define>
         </ui:composition>
