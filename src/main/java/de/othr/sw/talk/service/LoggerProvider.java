@@ -5,6 +5,9 @@ import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
+/**
+ * Provides a Util.logging.logger
+ */
 @Dependent
 public class LoggerProvider {
 
