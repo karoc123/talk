@@ -10,6 +10,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
+/**
+ * Converts categories for dropdown
+ */
 @FacesConverter("de.othr.sw.talk.entity.converter.CategoryConverterImpl")
 @RequestScoped
 public class CategoryConverterImpl implements Converter {

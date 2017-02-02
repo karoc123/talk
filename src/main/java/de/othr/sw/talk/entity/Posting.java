@@ -12,6 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Postings have a category (exactly one).
+ * Postings have comments.
+ */
 @Entity
 @Table(name="Posting")
 public class Posting extends Content implements Serializable {

@@ -11,6 +11,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Postings can be commentend. Comments can also be commented.
+ * They are displayed in the detail page of the posting.
+ */
 @Named
 @SessionScoped
 public class CommentModel implements Serializable{

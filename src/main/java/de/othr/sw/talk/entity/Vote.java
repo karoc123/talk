@@ -10,6 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Content can be voted by the users. Every Content
+ * can have a up or a down vote from the user.
+ * 
+ * Only implemented for postings at the moment.
+ */
 @Entity
 @Table(name="Vote")
 public class Vote implements Serializable {

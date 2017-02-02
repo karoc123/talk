@@ -13,6 +13,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+/**
+ * Only important testdata. There is one Users (not admin)
+ * and some categories without postings.
+ * @author Karoc
+ */
 @ApplicationScoped
 //@importantdata // if qualifier should work
 @Alternative

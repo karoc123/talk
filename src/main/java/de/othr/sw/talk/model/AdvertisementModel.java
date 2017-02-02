@@ -10,6 +10,12 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Advertisements are loaded on the page, if not on mobile.
+ * Every ad has a text and a link to the content. The date 
+ * is not used at the moment.
+ * @author Karoc
+ */
 @Named
 @RequestScoped
 public class AdvertisementModel implements Serializable {

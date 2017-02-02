@@ -11,8 +11,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * 
- * @author karoc
+ * Advertisements consist of a link to a website and some text.
+ * They can be created by other applications.
  */
 @Entity
 @Table(name="Advertisement")

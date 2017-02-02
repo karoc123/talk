@@ -90,6 +90,16 @@ public class PostingService {
    }
  
     /**
+     * How many postings are there in one category
+     * @param cat
+     * @return 
+     */
+    public int getNumberOfPostingsForCategory(Category cat) {
+        Number result = (Number) this.em.createNativeQuery("Select count(id) from Posting WHERE Category = :cat").setParameter("category", cat).getSingleResult();
+        return result.intValue();
+   }
+    
+    /**
      * All postings for given Categoryname
      * @param category
      * @return 
@@ -99,6 +109,26 @@ public class PostingService {
         TypedQuery<Posting> query;
         query = em.createQuery("SELECT u FROM Posting u WHERE u.category = :category ORDER BY u.creationDate DESC", Posting.class);
         return query.setParameter("category", cat).getResultList();
+    }
+    
+    /**
+     * List COUNT postings starting from START out of category CAT
+     * @param postingPaginationStart
+     * @param count
+     * @param category
+     * @return 
+     */
+    public List<Posting> getAllPostings(int postingPaginationStart, int count, String category) {
+        Category cat = this.getCategoryByString(category);
+        TypedQuery<Posting> query;
+        query = em.createQuery(
+                "SELECT u FROM Posting u WHERE u.category = :category ORDER BY u.creationDate DESC",
+                Posting.class);
+        return query
+                .setParameter("category", cat)
+                .setMaxResults(count)
+                .setFirstResult(postingPaginationStart)
+                .getResultList();
     }
     
     /**
@@ -318,6 +348,17 @@ public class PostingService {
         query = em.createQuery("SELECT u FROM Posting u WHERE u.user = :user ORDER BY u.creationDate DESC", Posting.class);
         return query.setParameter("user", user).getResultList();
    }
+    
+    /**
+     * All postings the users has upvoted
+     * @param user
+     * @return 
+     */
+    public List<Posting> getAllUpvotedPostings(User user) {
+        TypedQuery<Posting> query;
+        query = em.createQuery("SELECT p FROM Posting p inner join p.vote v WHERE v.user = :user AND v.vote = true ORDER BY p.creationDate DESC", Posting.class);
+        return query.setParameter("user", user).getResultList();
+    }
 
     /**
      * Delete a posting, if user = post.user OR user = admin
@@ -337,6 +378,5 @@ public class PostingService {
         }
         log.info("Something went wrong on posting delete");
         return false;
-   }
-    
+   }  
 }

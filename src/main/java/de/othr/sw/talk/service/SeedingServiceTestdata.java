@@ -13,6 +13,10 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+/**
+ * Some users (including admin ones), some categories and some simple postings.
+ * @author Karoc
+ */
 @ApplicationScoped
 //@testdata // if qualifier should work
 @Alternative	

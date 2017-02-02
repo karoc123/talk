@@ -12,7 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+/**
+ * Users have a unique username, a hashed password (with the salt)
+ * and can be deactive. If they have admin rights, the admin flag
+ * is true. In the userinformation entity are things like the e-mail.
+ * A User can have postings.
+ */
 @Entity
 @Table(name="TalkUser")
 public class User extends StringIdEntity implements Serializable {
@@ -26,6 +31,7 @@ public class User extends StringIdEntity implements Serializable {
     private String password;
     
     private boolean isAdmin;
+    private boolean isActiv;
     
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST})
     private List<Posting> postings;
@@ -33,19 +39,28 @@ public class User extends StringIdEntity implements Serializable {
     public User() {
         super();        
         this.postings = new ArrayList<>();
+        this.isActiv = true;
     }
     
     public User(String userId, String password){
         super(userId);
         this.postings = new ArrayList<>();
         this.salt = EntityUtils.createRandomString(4);
-        
+        this.isActiv = true;
         try {
             this.password = EntityUtils.hashPassword(password, this.salt, HASH_ALGORITHM);
         } catch (EntityUtils.EntityUtilException ex) {
             throw new RuntimeException("password can not be hashed", ex);
         }
         this.userInformation = new UserInformation();
+    }
+
+    public boolean isIsActiv() {
+        return isActiv;
+    }
+
+    public void setIsActiv(boolean isActiv) {
+        this.isActiv = isActiv;
     }
 
     public boolean isIsAdmin() {

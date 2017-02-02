@@ -135,11 +135,25 @@ public class PostingModel implements Serializable{
         this.numberOfPostings = this.postingService.getNumberOfPostingsForAll();
         return this.postingService.getAllPostings(this.postingPaginationStart, 10);
     }
-        
+
+ 
+    public List<Posting> allPostingsForPageByCategory() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String cat;
+        if(params.get("cat") != null )
+        {
+            cat = params.get("cat");
+            
+        } else {
+            cat = "Movies"; //maybe throw error!
+        }
+        this.numberOfPostings = this.postingService.getNumberOfPostingsForAll();
+        return this.postingService.getAllPostings(this.postingPaginationStart, 10, cat);
+    }
+    
     public List<Posting> allPostingsByCategory() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         String cat = params.get("cat");
-        System.out.println(cat);
         return this.postingService.getAllPostingsByCategory(cat);
     }
 }

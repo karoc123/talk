@@ -6,6 +6,9 @@ import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 
 
+/**
+ * Extended information of the user. E.g. user email
+ */
 @Embeddable @Access(AccessType.FIELD)
 public class UserInformation implements Serializable {
 

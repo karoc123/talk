@@ -13,6 +13,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * This model holds the "authentication" of the user.
+ * If login was successful, isAuthenticated is true.
+ */
 @Named
 @SessionScoped
 public class LoginModel implements Serializable{
@@ -50,6 +54,10 @@ public class LoginModel implements Serializable{
         this.newPassword = newPassword;
     }
 
+    /**
+     * if true, the user should have admin rights
+     * @return 
+     */
     public boolean isIsAdmin() {
         return isAdmin;
     }
@@ -106,6 +114,10 @@ public class LoginModel implements Serializable{
         this.isAuthenticated = isAuthenticated;
     }
     
+    /**
+     * If password OR email are wrong, there will be a error message
+     * @return 
+     */
     public String authenticate(){
         user = this.userService.authenticate(this.username, this.password);
         if (user != null){

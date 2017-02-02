@@ -2,7 +2,6 @@ package de.othr.sw.talk.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,6 +17,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+/**
+ * User generated content: Postings and Comments
+ */
 @MappedSuperclass
 public class Content implements Serializable {
     @Id

@@ -13,7 +13,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Every posting has a category
+ * Every posting has a category (but only one). Postings can be filterd
+ * by the category.
  */
 @Named
 @RequestScoped

@@ -25,12 +25,16 @@ public class UserModel implements Serializable{
         this.password = null;
     }
     
-    public List<User> allUsers() {
-        return this.userService.getAllUser();
+    public List<User> allActiveUsers() {
+        return this.userService.getAllActiveUsers();
     }
     
     public void delete(User toDelete){
         this.userService.deleteUser(toDelete);
+    }
+  
+    public void deactivate(User toDelete){
+        this.userService.deactivateUser(toDelete);
     }
     
     public String getUsername() {

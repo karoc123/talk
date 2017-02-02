@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>New Category</title>
     </h:head>
@@ -14,7 +15,7 @@
                 <h2>View all posts from: <h:outputText value="#{param['cat']}" /></h2>
 
                 <div class="ui divided items">
-                    <ui:repeat value="#{postingModel.allPostingsByCategory()}" var="posting">
+                    <ui:repeat value="#{postingModel.allPostingsForPageByCategory()}" var="posting">
                         <div class="item">
                           <div class="content">
                               <div class="header">#{posting.title}</div>
@@ -34,6 +35,21 @@
                         </div>
                     </ui:repeat>
                 </div>
+                
+                <h:form>
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(0)}" value="First Page">
+                        <f:param name="cat" value="#{param['cat']}" />
+                    </h:commandLink> | 
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart-10)}" value="">
+                        <f:param name="cat" value="#{param['cat']}" />
+                        &laquo; Page Before
+                    </h:commandLink> | 
+                    <h:commandLink action="#{postingModel.setPostingPaginationStart(postingModel.postingPaginationStart+10)}" value="Next Page">
+                        <f:param name="cat" value="#{param['cat']}" />
+                        &raquo;
+                    </h:commandLink>
+                    
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

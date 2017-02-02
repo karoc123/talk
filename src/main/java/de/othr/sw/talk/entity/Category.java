@@ -8,6 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Every posting has one (and exactly one) category.
+ * The postings can be filtered by category.
+ * If a category gets deleted, all postings of the category
+ * also get deleted.
+ */
 @Entity
 @Table(name="Category")
 public class Category implements Serializable {

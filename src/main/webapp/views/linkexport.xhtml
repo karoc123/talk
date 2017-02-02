@@ -29,6 +29,14 @@
 </ui:repeat>
                 </textarea>
                 </form>
+                
+                <h3>Upvoted links:</h3>
+                <form class="ui form">
+                <textarea class="ui form">
+                    <ui:repeat value="#{linkModel.getAllUpvotedPostings()}" var="posting">#{posting.link}
+</ui:repeat>
+                </textarea>
+                </form>
             </ui:define>
         </ui:composition>
     </h:body>

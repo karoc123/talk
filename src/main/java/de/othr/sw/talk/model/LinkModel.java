@@ -8,6 +8,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Users can export there links or upvoted links.
+ */
 @Named
 @RequestScoped
 public class LinkModel implements Serializable{
@@ -23,5 +26,9 @@ public class LinkModel implements Serializable{
 
     public List<Posting> getAllPostings() {
         return this.postingService.getAllPostings(loginModel.getUser());
+    }
+    
+    public List<Posting> getAllUpvotedPostings() {
+        return this.postingService.getAllUpvotedPostings(loginModel.getUser());
     }
 }
