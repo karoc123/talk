@@ -25,26 +25,47 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.transaction.Transactional;
 
+/**
+ * CRUD for Postings, Comments, Categories and Votes
+ */
 @RequestScoped
 public class PostingService {
     
+    /**
+     * Logging Service
+     */
     @Inject
     private Logger log;
     
     @PersistenceContext(unitName="TalkPU")
     private EntityManager em;
     
+    /**
+     * Perists the given posting
+     * @param newPosting
+     * @return 
+     */
     @Transactional
     public Posting createPosting(Posting newPosting){
         em.persist(newPosting);
         return newPosting;
     }
     
+    /**
+     * List of all Postings
+     * @return 
+     */
     public List<Posting> getAllPostings() {
         TypedQuery<Posting> query = em.createQuery("SELECT u FROM Posting AS u ORDER BY u.creationDate DESC", Posting.class);
         return query.getResultList();
     }
     
+    /**
+     * List COUNT postings starting from START
+     * @param postingPaginationStart
+     * @param count
+     * @return 
+     */
     public List<Posting> getAllPostings(int postingPaginationStart, int count) {
         TypedQuery<Posting> query;
         query = em.createQuery(
@@ -56,6 +77,10 @@ public class PostingService {
                 .getResultList();
     }
     
+    /**
+     * How many postings are there at all
+     * @return 
+     */
     public Long getNumberOfPostingsForAll() {
         CriteriaBuilder qb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = qb.createQuery(Long.class);
@@ -64,6 +89,11 @@ public class PostingService {
         return em.createQuery(cq).getSingleResult();
    }
  
+    /**
+     * All postings for given Categoryname
+     * @param category
+     * @return 
+     */
     public List<Posting> getAllPostingsByCategory(String category) {
         Category cat = this.getCategoryByString(category);
         TypedQuery<Posting> query;
@@ -71,6 +101,11 @@ public class PostingService {
         return query.setParameter("category", cat).getResultList();
     }
     
+    /**
+     * Persist a new category, if not already exists
+     * @param newCategory
+     * @return 
+     */
     @Transactional
     public Category createCategory(Category newCategory){
         if(em.find(Category.class, newCategory.toString()) == null){
@@ -81,10 +116,19 @@ public class PostingService {
         }
     }
     
+    /**
+     * Return Category Entity to given string
+     * @param cat
+     * @return 
+     */
     public Category getCategoryByString(String cat){
         return em.find(Category.class, cat);
     }
     
+    /**
+     * List of all categorys
+     * @return 
+     */
     public List<Category> getAllCategorys() {
         TypedQuery<Category> query = em.createQuery("SELECT u FROM Category AS u", Category.class);
         return query.getResultList();
@@ -113,11 +157,22 @@ public class PostingService {
         }
     }
 
+    /**
+     * Single posting by it id
+     * @param id
+     * @return 
+     */
     public Posting getPostingById(long id) {
         Posting post = em.find(Posting.class, id);
         return post;
     }
 
+    /**
+     * New comment to the given posting
+     * @param posting
+     * @param newComment
+     * @return 
+     */
     @Transactional
     public Comment createComment(Posting posting, Comment newComment){
         posting = em.merge(posting);
@@ -134,22 +189,42 @@ public class PostingService {
         return newComment;
     }
 
-    public Comment getCommentById(long parentCommentId) {
-        Comment comment = em.find(Comment.class, parentCommentId);
+    /**
+     * Comment by id
+     * @param commentId
+     * @return 
+     */
+    public Comment getCommentById(long commentId) {
+        Comment comment = em.find(Comment.class, commentId);
         return comment;
     }
     
+    /**
+     * All comments for the given posting id
+     * @param postingId
+     * @return 
+     */
     public List<Comment> getAllCommentsByPostingId(long postingId) {
         Posting post = this.getPostingById(postingId);
         return post.getComments();
     }
 
+    /**
+     * All child comments of the given comment
+     * @param com
+     * @return 
+     */
     public List<Comment> getCommentChilds(Comment com) {
         TypedQuery<Comment> query;
         query = em.createQuery("SELECT u FROM Comment u WHERE u.parent = :parent ORDER BY u.creationDate DESC", Comment.class);
         return query.setParameter("parent", com).getResultList();        
     }
 
+    /**
+     * Get all non-child comments for a given posting id
+     * @param postingId
+     * @return 
+     */
     public List<Comment> getallRootCommentsForPosting(long postingId) {
         Posting post = this.getPostingById(postingId);
         post.getComments().sort((c1, c2) -> c1.compareTo(c2));
@@ -158,6 +233,11 @@ public class PostingService {
             .collect(Collectors.toList());     
    }
 
+    /**
+     * All non-root comments for a given posting id
+     * @param postingId
+     * @return 
+     */
     public List<Comment> allChildCommentsForPosting(long postingId) {
         Posting post = this.getPostingById(postingId);
         return post.getComments().stream()
@@ -165,6 +245,12 @@ public class PostingService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Changes or creates a voting of a given user for the given posting
+     * @param post
+     * @param user
+     * @param vote 
+     */
     @Transactional
     public void updateVotePosting(Posting post, User user, boolean vote) {
         post = em.merge(post);
