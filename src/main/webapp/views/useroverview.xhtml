@@ -36,6 +36,8 @@
                         <h:commandButton class="ui fluid large primary button" action="#{loginModel.changePassword()}" value="Change password"/>
                         <hr />
                         <br />
+                    </h:form>
+                    <h:form class="ui large form">
                         <h:outputText value="Change your eMail:"/>
                         <h:inputText p:placeholder="E-Mail" value="#{loginModel.email}">
                             <f:validator validatorId="de.othr.sw.talk.entity.util.EmailValidator" />

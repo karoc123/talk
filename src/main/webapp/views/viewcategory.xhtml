@@ -18,7 +18,7 @@
                     <ui:repeat value="#{postingModel.allPostingsForPageByCategory()}" var="posting">
                         <div class="item">
                           <div class="content">
-                              <div class="header">#{posting.title}</div>
+                              <div class="header"><a href="#{posting.link}">#{posting.title}</a></div>
                             <div class="meta">
                                 <span>Category: 
                                     <h:link class="item" value="#{posting.category.name}" outcome="/views/viewcategory?cat=#{posting.category.name}">

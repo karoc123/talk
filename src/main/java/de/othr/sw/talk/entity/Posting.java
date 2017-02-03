@@ -37,7 +37,8 @@ public class Posting extends Content implements Serializable {
         
         //append http
         StringBuilder url = new StringBuilder();
-        if (!link.startsWith("http://", 0)) {
+        if (link.startsWith("http://", 0) || link.startsWith("https://", 0)) {
+        } else {
             url.append("http://");
         }
         url.append(link.trim());
