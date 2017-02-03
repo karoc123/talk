@@ -23,7 +23,7 @@ public class UrlValidator implements Validator {
         System.out.println("validation");
         
         StringBuilder url = new StringBuilder();
-        String urlValue = value.toString();
+        String urlValue = value.toString().trim();
 
         if (!urlValue.startsWith("http://", 0)) {
             url.append("http://");

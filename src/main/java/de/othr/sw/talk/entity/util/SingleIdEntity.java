@@ -3,7 +3,9 @@ package de.othr.sw.talk.entity.util;
 import java.util.Objects;
 import javax.persistence.MappedSuperclass;
 
-
+/**
+ * This class is from the OTHBib, not from me
+ */
 @MappedSuperclass
 public abstract class SingleIdEntity<PK extends Comparable> implements Comparable<SingleIdEntity> {
     public abstract PK getId();

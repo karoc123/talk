@@ -4,7 +4,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-
+/**
+ * This class is from the OTHBib, not from me
+ */
 @MappedSuperclass
 public class GeneratedIdEntity extends SingleIdEntity<Long> {
 

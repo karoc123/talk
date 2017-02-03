@@ -34,7 +34,15 @@ public class Posting extends Content implements Serializable {
 
     public Posting(String link, String title, Category cat, User user, String text) {
         super(user, text, new Date());
-        this.link = link;
+        
+        //append http
+        StringBuilder url = new StringBuilder();
+        if (!link.startsWith("http://", 0)) {
+            url.append("http://");
+        }
+        url.append(link.trim());
+        this.link = url.toString();
+        
         this.title = title;
         this.category = cat;
         this.comments = new ArrayList<>();

@@ -13,6 +13,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Model for a single posting
+ */
 @Named
 @SessionScoped
 public class PostingDetailModel implements Serializable{

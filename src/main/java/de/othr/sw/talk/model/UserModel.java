@@ -8,7 +8,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-
+/**
+ * To create or display a user
+ * @see LoginModel
+ * @author Karoc
+ */
 @Named
 @SessionScoped
 public class UserModel implements Serializable{

@@ -3,7 +3,9 @@ package de.othr.sw.talk.entity.util;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-
+/**
+ * This class is from the OTHBib, not from me
+ */
 @MappedSuperclass
 public class RandomIdEntity extends SingleIdEntity<String> {
 

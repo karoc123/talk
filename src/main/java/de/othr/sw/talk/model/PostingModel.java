@@ -3,19 +3,23 @@ package de.othr.sw.talk.model;
 import de.othr.sw.talk.entity.Category;
 import de.othr.sw.talk.entity.Posting;
 import de.othr.sw.talk.entity.User;
-import de.othr.sw.talk.entity.Vote;
 import de.othr.sw.talk.service.PostingService;
 import de.othr.sw.talk.service.UserService;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Users create postings.
+ * Postings have a category and can have comments.
+ * They are displayed on the main page or on the page to the category.
+ * SessionScoped because of the pagination. Better option would be a PageModel or something like that.
+ */
 @Named
 @SessionScoped
 public class PostingModel implements Serializable{
@@ -124,6 +128,9 @@ public class PostingModel implements Serializable{
     
     public String create(){
         Posting post = postingService.createPosting(new Posting(this.link, this.title, this.category, loginModel.getUser(), this.text));
+        this.link = "";
+        this.title = "";
+        this.text = "";
         return "viewposting.xhtml?faces-redirect=true&includeViewParams=true&post=" + post.getId();
     }
     
